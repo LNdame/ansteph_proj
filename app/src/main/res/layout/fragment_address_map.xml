@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:gravity="center"
+              tools:context="ansteph.com.beecab.view.callacab.AddressMapFragment">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:elevation="3dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tap_text"
+            android:text="@string/tap_instructions"
+            android:textStyle="italic"
+            android:textSize="10sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:orientation="horizontal">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:id="@+id/txtFormatAddress"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/textColorSecondary"
+        android:text="Ok"
+        android:id="@+id/btnBack"
+        android:layout_gravity="right"/>
+</LinearLayout>
+
+<TextView
+    android:visibility="gone"
+    android:id = "@+id/address_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="cameralocation"/>
+
+
+    </LinearLayout>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+
+
+</LinearLayout>

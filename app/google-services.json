@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "736746937361",
+    "firebase_url": "https://beecab-61b98.firebaseio.com",
+    "project_id": "beecab-61b98",
+    "storage_bucket": "beecab-61b98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736746937361:android:fd44f597ec35e1a5",
+        "android_client_info": {
+          "package_name": "ansteph.com.beecab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736746937361-btvcdsevtmq2rra47tmile63gekk66c8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPxxzuyiSsOhmXoTMYerMKOL5Oa1HoI3w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736746937361:android:80e855a57fe601d6",
+        "android_client_info": {
+          "package_name": "ansteph.com.beecabfordrivers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736746937361-btvcdsevtmq2rra47tmile63gekk66c8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPxxzuyiSsOhmXoTMYerMKOL5Oa1HoI3w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

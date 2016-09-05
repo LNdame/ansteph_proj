@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFC107</color>
+    <color name="colorPrimaryDark">#FFA000</color>
+    <color name="colorPrimaryLight">#FFECB3</color>
+    <color name="textColorPrimary">#212121</color>
+    <color name="textColorSecondary">#727272</color>
+    <color name="windowBackground">#ECEFF1</color>
+    <color name="windowBackgroundSecondary">#CFD8DC</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#607D8B</color>
+    <color name="colorDivider">#B6B6B6</color>
+    <color name="cabtext">#4c4c4c</color>
+    <color name="viewBg">#f1f5f8</color>
+    <color name="white">#D0FFFFFF</color>
+    <color name="alert">#D0FF0000</color>
+
+    <color name="hue_azure">#007fff</color>
+    <color name="green">#7cfc00</color>
+</resources>

@@ -1,0 +1,170 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="ansteph.com.beecab.view.callacab.CabCallerFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ViewAnimator
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/viewAnimator"
+        android:layout_gravity="center_horizontal|top"
+        android:background="@color/colorAccent" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:src="@drawable/img1934x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageView>
+
+        <Button
+            android:id="@+id/button"
+            android:text="This Is My Button"
+            android:layout_gravity="center_vertical"
+            android:textSize="30dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        </Button>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:src="@drawable/img2934x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:text="        This Is  My Text "
+            android:textSize="30dp"
+            android:textColor="#0000FF"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+    </ViewAnimator>
+
+
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Call a cab"
+        android:layout_margin="20dp"
+
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@color/colorAccent"
+        android:id="@+id/btnCaller"
+        android:layout_gravity="center" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pending Call"
+            android:layout_marginLeft="20dp"
+           style="@style/buttonStyle"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:background="@color/colorAccent"
+            android:id="@+id/btnPending"
+            android:layout_gravity="center" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assigned Call"
+            style="@style/buttonStyle"
+           android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:background="@color/colorAccent"
+            android:id="@+id/btnAssigned"
+             />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal|bottom"
+        >
+        <!-- layout for Pending Job jobs-->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/llPendingJob"
+        android:layout_gravity="center_horizontal|bottom"
+       >
+
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="Pending"/>
+
+        </RelativeLayout>
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listViewPending"
+            android:layout_gravity="center_horizontal|bottom" />
+
+    </LinearLayout>
+
+        <!-- layout for Assigned jobs-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/llAssignedJob"
+            android:layout_gravity="center_horizontal|bottom"
+           >
+
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="Assigned"/>
+
+            </RelativeLayout>
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/listViewAssigned"
+                android:layout_gravity="center_horizontal|bottom" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
+</LinearLayout>

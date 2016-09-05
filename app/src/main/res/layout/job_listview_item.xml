@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_marginBottom="25dp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_weight= "1"
+        android:layout_marginTop="15dp"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
+        android:weightSum="1">
+
+        <ImageView
+android:visibility="gone"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end|center_vertical"
+            android:src="@mipmap/ic_close"
+            android:id="@+id/imgbtnDrop"
+            android:layout_marginTop="3dp"/>
+
+        <Button
+
+            android:layout_width="70dp"
+            android:layout_height="38dp"
+            android:textSize="10sp"
+            style="@style/buttonStyle"
+            android:text="Details"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="5dp"
+
+            android:elevation="4dp"
+            android:id="@+id/btnDetails"
+            android:layout_weight="1.03"/>
+
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="match_parent">
+    <RelativeLayout
+android:paddingLeft="05dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="Pick up"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+
+                android:text="meduim"
+                android:id="@+id/txtPickup"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="Destination"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:textSize="12sp"
+                android:text="medui"
+                android:id="@+id/txtDestination"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+android:layout_marginRight="10dp"
+            android:layout_gravity="right"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="Fare"
+                android:id="@+id/textView2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="R 00"
+                android:id="@+id/txtFare"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="Time"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="9:00 PM"
+                android:id="@+id/txtTime"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
