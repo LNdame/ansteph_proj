@@ -106,4 +106,5 @@
     <string name="title_activity_login">Welcome</string>
     <string name="title_activity_edit_profile">Profile</string>
     <string name="title_activity_job_detail">Job Detail</string>
+    <string name="title_activity_job_responder">JobResponder</string>
 </resources>

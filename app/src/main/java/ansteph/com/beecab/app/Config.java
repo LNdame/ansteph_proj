@@ -7,19 +7,22 @@ public class Config {
 
     /****************************************************---Domain---*************************************************************/
 
-   // private static String DOMAIN="http://10.0.0.5:8888/taxi/";
-    private static String DOMAIN="http://10.11.0.86:8888/taxi/";
+   private static String DOMAIN="http://10.0.0.6:8888/taxi/";
+  //  private static String DOMAIN="http://10.102.137.23:8888/taxi/";
+   // private static String DOMAIN="http://www.beecab.co.za/";
 
     /****************************************************---Route---*************************************************************/
 
 
     public static final String URL_VERIFY_OTP = DOMAIN+"v1/activate_user";
+    public static final String REGISTER_JOB_RESPONSE = DOMAIN+"v1/retrievejour_response/%s";
     public static final String REGISTER_URL = DOMAIN+"v1/register_client";
 
     public static final String RETRIEVE_USER_URL =DOMAIN+"v1/retrievetcuser/%s/%s";
     public static final String REGISTER_FB =DOMAIN+"v1/register_fbNot";
 
     public static final String CREATE_JOB_URL =DOMAIN+"v1/createjob";
+    public static final String ASSIGN_JOB_URL =DOMAIN+"v1/createacceptedrequest";
 
     public static final String RETRIEVE_PENDING_JOB_URL =DOMAIN+"v1/retrievependingjob/%s";
     public static final String RETRIEVE_ASS_JOB_URL =DOMAIN+"v1/retrieveassignjob/%s";
@@ -27,7 +30,7 @@ public class Config {
     /****************************************************---SMS FLAGS---*************************************************************/
 
     // SMS provider identification
-    // It should match with your SMS gateway origin
+    // It should match with your SMS gateway origin /retrieveallpendingjob/:jrID
     // You can use  MSGIND, TESTER and ALERTS as sender ID
     // If you want custom sender Id, approve MSG91 to get one
     public static final String SMS_ORIGIN = "ANSTEPHIM";
@@ -67,6 +70,10 @@ public class Config {
     //JSON Tag from response from server
     public static final String ERROR_RESPONSE= "error";
     public static final String MSG_RESPONSE= "message";
+
+
+
+
 
 
 }

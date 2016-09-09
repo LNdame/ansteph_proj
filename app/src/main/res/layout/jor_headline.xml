@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <TextView android:id="@+id/puTitle"
+              style="@style/Material_Card_Subtitle_16dp"
+              tools:text="Pickup"/>
+    <TextView android:id="@+id/PickupAdd"
+              style="@style/Material_Card_Pickup_16dp"
+              tools:text="Title"/>
+
+    <TextView android:id="@+id/desTitle"
+              style="@style/Material_Card_Subtitle_16dp"
+              tools:text="Destination"/>
+
+    <TextView android:id="@+id/DestinationAdd"
+              style="@style/Material_Card_Destination_16dp"
+              tools:text="Title"/>
+</LinearLayout>

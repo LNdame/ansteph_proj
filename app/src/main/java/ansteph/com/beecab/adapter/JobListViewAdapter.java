@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import ansteph.com.beecab.R;
 import ansteph.com.beecab.model.JourneyRequest;
 import ansteph.com.beecab.view.callacab.JobDetail;
+import ansteph.com.beecab.view.callacab.JobResponder;
 
 /**
  * Created by loicStephan on 26/07/16.
@@ -85,6 +86,15 @@ public class JobListViewAdapter extends ArrayAdapter<JourneyRequest> {
                 i.putExtra("job",jr);
                 context.startActivity(i);
                // Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, JobResponder.class);
+                i.putExtra("job",jr);
+                context.startActivity(i);
             }
         });
 
