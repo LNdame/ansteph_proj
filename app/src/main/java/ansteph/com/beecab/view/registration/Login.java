@@ -35,6 +35,7 @@ import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.helper.SessionManager;
 import ansteph.com.beecab.model.Client;
 import ansteph.com.beecab.view.callacab.CabCaller;
+import ansteph.com.beecab.view.intro.WelcomePage;
 
 public class Login extends AppCompatActivity {
 
@@ -85,7 +86,8 @@ public class Login extends AppCompatActivity {
 
             if(mobile.equals("01123581321") && pwd.equals("wewillrocku")){
                 sessionManager.createLoginSession("tcmaster","BeeCab","master@beecab.co.za","01123581321","3d2edba48cf1a43401f5d906942f87c8");
-                Intent intent = new Intent(getApplicationContext(), CabCaller.class);
+                //launch the intro
+                Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
                 startActivity(intent);
             }else{
 
@@ -143,8 +145,8 @@ public class Login extends AppCompatActivity {
 
 
 
-                                // launch the call cab activity the main landing page
-                                    Intent intent = new Intent(getApplicationContext(), CabCaller.class);
+                                // launch the intro || the call cab activity the main landing page if the guy skip
+                                    Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
                                     startActivity(intent);
                                 }
                             }else{
