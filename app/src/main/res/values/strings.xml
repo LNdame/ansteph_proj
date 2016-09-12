@@ -14,9 +14,12 @@
     <string name="hint_email">Email</string>
     <string name="hint_mobile">Cell Number</string>
     <string name="hint_password">Password</string>
+    <string name="hint_pre_password">Previous Password</string>
+    <string name="hint_new_password">New Password</string>
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="btn_sign_up">Create Account</string>
     <string name="btn_log_in">Get in</string>
+    <string name="btn_send_forgotten">Send</string>
     <string name="err_msg_name">Enter your full name</string>
     <string name="err_msg_email">Enter valid email address</string>
     <string name="err_msg_password">Enter the password</string>
@@ -113,17 +116,19 @@
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
 
-    <string name="slide_1_title">Hello Food!</string>
-    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
+    <string name="slide_1_title">Hello from BeeCab!</string>
+    <string name="slide_1_desc">Welcome to the network of cab,\n find your favorite cab companies and reliable freelancers !</string>
 
     <string name="slide_2_title">Movie Tickets</string>
     <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
 
-    <string name="slide_3_title">Great Discounts</string>
-    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
+    <string name="slide_3_title">Across South Africa</string>
+    <string name="slide_3_desc">Select your pickup and destination area,\n  set the pickup time,\n  propose a fare and let the biding war begin!</string>
 
-    <string name="slide_4_title">World Travel</string>
-    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+    <string name="slide_4_title">All about YOU</string>
+    <string name="slide_4_desc">Please do not forget to complete your profile,\n Settings ->Profile </string>
+    <string name="title_activity_lost_password">LostPassword</string>
+    <string name="title_activity_update_password">Update Password</string>
 
 
 </resources>

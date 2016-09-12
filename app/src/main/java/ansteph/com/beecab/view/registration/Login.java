@@ -1,9 +1,15 @@
 package ansteph.com.beecab.view.registration;
 
+
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -141,8 +148,8 @@ public class Login extends AppCompatActivity {
                                     sessionManager.createLoginSession(mGlobalretainer.get_grClient().getId(),mGlobalretainer.get_grClient().getName(),
                                             mGlobalretainer.get_grClient().getEmail(),mGlobalretainer.get_grClient().getMobile(),mGlobalretainer.get_grClient().getApikey());
 
-
-
+                                    //to notify user
+                                    NotifyUser();
 
 
                                 // launch the intro || the call cab activity the main landing page if the guy skip
@@ -195,6 +202,41 @@ public class Login extends AppCompatActivity {
 
     public void retrievePwd (View view)
     {
+
+        Intent intent = new Intent(getApplicationContext(), LostPassword.class);
+        startActivity(intent);
+    }
+
+
+    public void NotifyUser()
+    {
+        int mId =1;
+
+        android.support.v4.app.NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_stat_vusi)
+                .setContentTitle("BeeCab")
+                .setContentText("Login Successful").setAutoCancel(true);
+
+        //Creates an explicit intent for an activity
+        Intent resultIntent  = new Intent(this, CabCaller.class);
+
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(CabCaller.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(mId, mBuilder.build());
+
+
 
 
     }
