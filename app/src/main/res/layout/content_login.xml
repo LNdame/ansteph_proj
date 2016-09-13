@@ -65,7 +65,7 @@
             android:textColor="@color/colorAccent"
             android:textColorHint="@color/colorAccent"
             android:inputType="textPassword"
-            android:hint="@string/hint_password" />
+            android:hint="Password" />
     </android.support.design.widget.TextInputLayout>
 
     <Button android:id="@+id/btn_signup"

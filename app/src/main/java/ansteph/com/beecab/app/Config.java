@@ -7,8 +7,8 @@ public class Config {
 
     /****************************************************---Domain---*************************************************************/
 
-   private static String DOMAIN="http://10.0.0.6:8888/taxi/";
-  //  private static String DOMAIN="http://10.102.137.23:8888/taxi/";
+  // private static String DOMAIN="http://10.0.0.6:8888/taxi/";
+    private static String DOMAIN="http://10.102.137.163:8888/taxi/";
    // private static String DOMAIN="http://www.beecab.co.za/";
 
     /****************************************************---Route---*************************************************************/
@@ -25,6 +25,7 @@ public class Config {
     public static final String ASSIGN_JOB_URL =DOMAIN+"v1/createacceptedrequest";
 
     public static final String RETRIEVE_PENDING_JOB_URL =DOMAIN+"v1/retrievependingjob/%s";
+    public static final String UPDATE_PWD_URL =DOMAIN+"v1/changepassword/%s/%s";
     public static final String RETRIEVE_ASS_JOB_URL =DOMAIN+"v1/retrieveassignjob/%s";
 
     /****************************************************---SMS FLAGS---*************************************************************/

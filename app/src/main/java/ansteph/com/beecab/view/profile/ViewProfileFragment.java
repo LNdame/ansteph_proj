@@ -51,7 +51,7 @@ public class ViewProfileFragment extends Fragment {
 
     private Uri filePath;
 
-    public static final String UPLOAD_URL = "http://10.0.0.3:8888/taxi/v1/upload.php";
+    public static final String UPLOAD_URL = "http://10.102.137.163:8888/taxi/v1/upload.php";
     public static final String UPLOAD_KEY = "image";
 
 TextView txtalert;
@@ -128,7 +128,8 @@ TextView txtalert;
         btnup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage();
+               // uploadImage();
+                startActivity(new Intent(getActivity(), UpdatePassword.class));
             }
         });
 
