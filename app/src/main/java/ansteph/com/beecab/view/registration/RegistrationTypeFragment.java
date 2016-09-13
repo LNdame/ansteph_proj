@@ -38,6 +38,9 @@ public class RegistrationTypeFragment extends Fragment {
         btnTypBoy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ((Registration)getActivity()).setGender("male");
+
                 Fragment fragment = new RegistrationFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
@@ -56,6 +59,7 @@ public class RegistrationTypeFragment extends Fragment {
         btnTypGirl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((Registration)getActivity()).setGender("female");
                 Fragment fragment = new RegistrationFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()

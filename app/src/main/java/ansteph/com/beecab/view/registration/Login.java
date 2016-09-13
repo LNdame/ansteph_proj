@@ -143,18 +143,27 @@ public class Login extends AppCompatActivity {
                                Client cl = new Client(profile.getString("id"),profile.getString("name"),profile.getString("email"),
                                        profile.getString("mobile"),profile.getString("apikey"));
 
+                                 int status = profile.getInt("status");
+
                                 mGlobalretainer.set_grClient(cl);
                                 if(mGlobalretainer.get_grClient()!=null){
                                     sessionManager.createLoginSession(mGlobalretainer.get_grClient().getId(),mGlobalretainer.get_grClient().getName(),
                                             mGlobalretainer.get_grClient().getEmail(),mGlobalretainer.get_grClient().getMobile(),mGlobalretainer.get_grClient().getApikey());
 
                                     //to notify user
-                                    NotifyUser();
+                                   // NotifyUser();
 
+                                    if(status == 1){
+                                        Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                                        startActivity(intent);
+                                    }else if (status == 0){
+                                        Intent intent = new Intent(getApplicationContext(), Registration.class);
+                                        intent.putExtra("OTP", 0);
+                                        startActivity(intent);
+                                    }
 
                                 // launch the intro || the call cab activity the main landing page if the guy skip
-                                    Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
-                                    startActivity(intent);
+
                                 }
                             }else{
                                 Toast.makeText(getApplicationContext(), serverMsg, Toast.LENGTH_LONG).show();

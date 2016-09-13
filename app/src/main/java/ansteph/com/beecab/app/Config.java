@@ -7,8 +7,8 @@ public class Config {
 
     /****************************************************---Domain---*************************************************************/
 
-  // private static String DOMAIN="http://10.0.0.6:8888/taxi/";
-    private static String DOMAIN="http://10.102.137.163:8888/taxi/";
+ private static String DOMAIN="http://10.0.0.6:8888/taxi/";
+    //  private static String DOMAIN="http://10.102.137.163:8888/taxi/";
    // private static String DOMAIN="http://www.beecab.co.za/";
 
     /****************************************************---Route---*************************************************************/
@@ -58,6 +58,8 @@ public class Config {
     public static final String KEY_JOB_DESTCOORD = "destCoord";
     public static final String KEY_JOB_TCID = "tcID";
     public static final String KEY_JOB_SHARED = "shared";
+
+    public static final String KEY_GENDER= "gender";
 
     //Keys to send username, password, phone and otp
     public static final String KEY_NAME = "name";

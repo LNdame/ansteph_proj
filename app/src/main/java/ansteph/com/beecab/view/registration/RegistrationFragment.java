@@ -2,17 +2,23 @@ package ansteph.com.beecab.view.registration;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -44,7 +50,11 @@ public class RegistrationFragment extends Fragment {
     EditText txtEmail;
     EditText txtMobile;
     EditText txtPassword;
+    EditText txtConPassword;
+    TextView txtReg;
 
+    private String gender;
+    ImageView imgValid;
     String fullName ="", email="", mobile="",pwd="";
 
     public RegistrationFragment() {
@@ -61,25 +71,81 @@ public class RegistrationFragment extends Fragment {
         txtEmail = (EditText) rootView.findViewById(R.id.input_email);
         txtMobile = (EditText) rootView.findViewById(R.id.input_mobile);
         txtPassword = (EditText) rootView.findViewById(R.id.input_password);
+        txtConPassword = (EditText) rootView.findViewById(R.id.input_confirm_password);
+        imgValid = (ImageView) rootView.findViewById(R.id.imgValid);
+        txtReg = (TextView) rootView.findViewById(R.id.txtRegistration);
 
         requestQueue = Volley.newRequestQueue(getActivity());
         Button btnCreateAcc = (Button) rootView.findViewById(R.id.btn_signup);
-    btnCreateAcc.setOnClickListener(new View.OnClickListener() {
+
+
+        gender =  ((Registration)getActivity()).getGender();
+
+        txtConPassword.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                //Do registration
+            }
 
-                try {
-                    registerClient();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String npwd = txtPassword.getText().toString().trim();
+                String cpwd = txtConPassword.getText().toString().trim();
+                if(!npwd.isEmpty() && npwd.length() == cpwd.length())
+                {
+                    if (npwd.equals(cpwd))
+                    {
+                        //show the tick mark
+                        imgValid.setVisibility(View.VISIBLE);
+
+                    }else {
+                        //no show the tick mark
+                        imgValid.setVisibility(View.INVISIBLE);
+                    }
+                }else{
+                    //no show the tick mark
+                    imgValid.setVisibility(View.INVISIBLE);
                 }
-
-
             }
         });
 
+        txtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String npwd = txtPassword.getText().toString().trim();
+                String cpwd = txtConPassword.getText().toString().trim();
+                if(!npwd.isEmpty() && npwd.length() == cpwd.length())
+                {
+                    if (npwd.equals(cpwd))
+                    {
+                        //show the tick mark
+                        imgValid.setVisibility(View.VISIBLE);
+
+                    }else {
+                        //no show the tick mark
+                        imgValid.setVisibility(View.INVISIBLE);
+                    }
+                }else{
+                    //no show the tick mark
+                    imgValid.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
        /* btnCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +154,63 @@ public class RegistrationFragment extends Fragment {
             }
         });*/
 
+        btnCreateAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+              if (!isEmailOk())
+              {
+                  txtReg.setText("Invalid email address ");
+                  txtReg.setTextColor(Color.RED);
+                  return;
+              }
+
+              if(txtFullName.getText().toString().isEmpty() || txtMobile.getText().toString().isEmpty())
+              {
+                  txtReg.setText("Missing some critical information");
+                  txtReg.setTextColor(Color.YELLOW);
+                  return;
+              }
+
+              if(txtPassword.getText().toString().length()<6)
+              {
+                  txtReg.setText("The password provided is too short (min. 6 characters)");
+                  txtReg.setTextColor(Color.YELLOW);
+                  return;
+              }
+
+              if(imgValid.getVisibility() == View.VISIBLE){
+
+                  //Do registration
+                  try {
+                      registerClient();
+                  } catch (JSONException e) {
+                      e.printStackTrace();
+                  }
+
+              }else{
+                  txtReg.setText("The password and the confirmed password do not match ");
+                  txtReg.setTextColor(Color.RED);
+              }
+
+
+
+            }
+        });
+
+
+
+
         return rootView;
+    }
+
+    private boolean isEmailOk(){
+        if(!txtEmail.getText().toString().isEmpty())
+        {
+            return Patterns.EMAIL_ADDRESS.matcher(txtEmail.getText().toString().trim()).matches();
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -151,14 +273,14 @@ public class RegistrationFragment extends Fragment {
                             //creating the Json object from the response
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean error = jsonResponse.getBoolean(Config.ERROR_RESPONSE);
-                            String serverMsg = jsonResponse.getString("message");
+                            String serverMsg = jsonResponse.getString(Config.MSG_RESPONSE);
                             //if it is success
                             if(!error)
                             {
                                 //asking user to confirm OTP
                                 confirmOtp();
                             }else{ //check for message already existing user
-                                Toast.makeText(getActivity(), "Welcome back to our network, we happy to have you back", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), serverMsg, Toast.LENGTH_LONG).show();
 
                             }
 
@@ -185,6 +307,7 @@ public class RegistrationFragment extends Fragment {
                 params.put(Config.KEY_EMAIL, email);
                 params.put(Config.KEY_MOBILE, mobile);
                 params.put(Config.KEY_PASSWORD, pwd);
+                params.put(Config.KEY_GENDER, gender);
 
                 return params;
             }

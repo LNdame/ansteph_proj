@@ -14,6 +14,8 @@ import ansteph.com.beecab.R;
 
 public class Registration extends AppCompatActivity {
 
+    private String gender;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,14 +24,44 @@ public class Registration extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Bundle b = getIntent().getExtras();
+        if(b!=null)
+        {
+            int status = b.getInt("OTP");
+            if(status==0)
+            {
+                Fragment fragment = new CheckOTPFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
+                        .addToBackStack(CheckOTPFragment.class.getSimpleName());
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.commit();
+            }else{
+                Fragment fragment = new RegistrationTypeFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
+                        .addToBackStack(RegistrationTypeFragment.class.getSimpleName());
+                fragmentTransaction.replace(R.id.container_body, fragment);
+                fragmentTransaction.commit();
+            }
+        }else {
 
 
-        Fragment fragment = new RegistrationTypeFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
-                .addToBackStack(RegistrationTypeFragment.class.getSimpleName());
-        fragmentTransaction.replace(R.id.container_body, fragment);
-        fragmentTransaction.commit();
+            Fragment fragment = new RegistrationTypeFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
+                    .addToBackStack(RegistrationTypeFragment.class.getSimpleName());
+            fragmentTransaction.replace(R.id.container_body, fragment);
+            fragmentTransaction.commit();
+        }
     }
 
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 }

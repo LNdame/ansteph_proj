@@ -13,6 +13,7 @@
 
     <string name="hint_email">Email</string>
     <string name="hint_mobile">Cell Number</string>
+    <string name="hint_reg_mobile">Cell Number (i.e 0725557766)</string>
     <string name="hint_password">Password</string>
     <string name="hint_pre_password">Previous Password</string>
     <string name="hint_new_password">New Password</string>
