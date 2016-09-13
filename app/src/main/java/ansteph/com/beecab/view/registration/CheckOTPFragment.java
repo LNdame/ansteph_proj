@@ -3,6 +3,7 @@ package ansteph.com.beecab.view.registration;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -125,9 +126,9 @@ public class CheckOTPFragment extends Fragment {
         setTitle("Activate User");
     }
 
-    public void gotoProfile()
+    public void gotoLogin()
     {
-        Fragment fragment = new RegSuccessFragment();
+       /* Fragment fragment = new RegSuccessFragment();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
 
@@ -135,7 +136,9 @@ public class CheckOTPFragment extends Fragment {
 
         fragmentTransaction.replace(R.id.container_body, fragment);
         fragmentTransaction.commit();
-        setTitle("Edit profile");
+        setTitle("Edit profile");*/
+        Intent i = new Intent (getActivity(),Login.class);
+        startActivity(i);
     }
 
     @Override
@@ -177,8 +180,8 @@ public class CheckOTPFragment extends Fragment {
 
                             if(!error)
                             {
-                                //go to next fragment
-                                gotoProfile();
+                                //go to back to login page
+                                gotoLogin();
                             }else{
                                 Toast.makeText(getActivity(), "Wrong code entered, please try again",Toast.LENGTH_LONG).show();
                                 txtOTP.setText("");
