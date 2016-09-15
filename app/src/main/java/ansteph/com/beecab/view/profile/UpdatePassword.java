@@ -34,6 +34,7 @@ import ansteph.com.beecab.R;
 import ansteph.com.beecab.app.Config;
 import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.model.Client;
+import ansteph.com.beecab.view.callacab.CabCaller;
 import ansteph.com.beecab.view.intro.WelcomePage;
 
 public class UpdatePassword extends AppCompatActivity {
@@ -203,6 +204,18 @@ public class UpdatePassword extends AppCompatActivity {
 
     }
 
+    public void gotoLanding()
+    {
+        Intent i = new Intent(getApplicationContext(), CabCaller.class);
+        // Closing all the Activities
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        //Add new Flag to start new Activity
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        //Starting Login Activity
+       startActivity(i);
+    }
 
     public void updatePassword(String pwd) throws JSONException {
         final ProgressDialog loading = ProgressDialog.show(this, "Updating","Now updating our records", false, false);
@@ -223,8 +236,8 @@ public class UpdatePassword extends AppCompatActivity {
 
                               Toast.makeText(getApplicationContext(), serverMsg, Toast.LENGTH_SHORT).show();
 
-                              //  UpdatePendingJobList(jobsjsonArray);
-
+                              //go back to landing
+                                gotoLanding();
                             }
                         }catch (JSONException e)
                         {

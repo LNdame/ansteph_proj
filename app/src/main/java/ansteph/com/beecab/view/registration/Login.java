@@ -43,6 +43,7 @@ import ansteph.com.beecab.helper.SessionManager;
 import ansteph.com.beecab.model.Client;
 import ansteph.com.beecab.view.callacab.CabCaller;
 import ansteph.com.beecab.view.intro.WelcomePage;
+import ansteph.com.beecab.view.profile.UpdatePassword;
 
 public class Login extends AppCompatActivity {
 
@@ -147,15 +148,21 @@ public class Login extends AppCompatActivity {
 
                                 mGlobalretainer.set_grClient(cl);
                                 if(mGlobalretainer.get_grClient()!=null){
-                                    sessionManager.createLoginSession(mGlobalretainer.get_grClient().getId(),mGlobalretainer.get_grClient().getName(),
-                                            mGlobalretainer.get_grClient().getEmail(),mGlobalretainer.get_grClient().getMobile(),mGlobalretainer.get_grClient().getApikey());
 
+                                    Toast.makeText(getApplicationContext(), pwd.substring(0,4), Toast.LENGTH_LONG).show();
                                     //to notify user
                                    // NotifyUser();
-
-                                    if(status == 1){
+                                    if((pwd.substring(0,5)).equals("prov_")){
+                                        Intent intent = new Intent(getApplicationContext(), UpdatePassword.class);
+                                        startActivity(intent);
+                                    }
+                                   else if(status == 1){
                                         Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
                                         startActivity(intent);
+
+                                        sessionManager.createLoginSession(mGlobalretainer.get_grClient().getId(),mGlobalretainer.get_grClient().getName(),
+                                                mGlobalretainer.get_grClient().getEmail(),mGlobalretainer.get_grClient().getMobile(),mGlobalretainer.get_grClient().getApikey());
+
                                     }else if (status == 0){
                                         Intent intent = new Intent(getApplicationContext(), Registration.class);
                                         intent.putExtra("OTP", 0);
