@@ -64,15 +64,6 @@
                 android:value="ansteph.com.beecab.view.callacab.CabCaller"/>
         </activity>
         <activity
-            android:name=".view.callacab.SetRoute2"
-            android:label="@string/title_activity_set_route2"
-            android:parentActivityName=".view.callacab.CabCaller"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ansteph.com.beecab.view.callacab.CabCaller"/>
-        </activity>
-        <activity
             android:name=".view.registration.Login"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar">

@@ -199,7 +199,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="Back"
-                android:id="@+id/button2"
+                android:id="@+id/btnJobback"
                 android:layout_centerVertical="true"
                 />
 

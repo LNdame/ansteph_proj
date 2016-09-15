@@ -270,8 +270,9 @@ public class AddressMapFragment extends Fragment implements
         projection = mGoogleMap.getProjection();
         mPE = mGoogleMap.addMarker(new MarkerOptions().position(pe).title("BeeCab")
         .snippet("Drag to desire location").
-                        icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)).draggable(true));
+                        icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_pin)).draggable(true));
 
+       // icon(BitmapDescriptorFactory.fromResource(R.drawable.arrow))
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pe,14.5f));
         mGoogleMap.setOnMyLocationButtonClickListener(this);
 
@@ -328,7 +329,7 @@ public class AddressMapFragment extends Fragment implements
     public void onMapClick(LatLng latLng) {
        // ((SetRoute)getActivity()).testaccess();
 
-       // ((SetRoute2)getActivity()).testaccess();
+
 
     }
 

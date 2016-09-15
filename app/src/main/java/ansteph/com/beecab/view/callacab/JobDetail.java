@@ -1,16 +1,22 @@
 package ansteph.com.beecab.view.callacab;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -41,6 +47,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import ansteph.com.beecab.R;
+import ansteph.com.beecab.app.Config;
 import ansteph.com.beecab.model.JourneyRequest;
 
 public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
@@ -54,7 +61,7 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
     JourneyRequest job;
     private Marker mPE;
 
-
+    Button btnCancelJob, btnJobback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +104,57 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
         {
             e.printStackTrace();
         }
+
+        btnCancelJob = (Button) findViewById(R.id.btnCancelJob) ;
+
+        btnCancelJob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               // Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_LONG).show();
+
+               showDanger();
+
+            }
+        });
+
+        btnJobback =(Button) findViewById(R.id.btnJobback);
+        btnJobback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             onBackPressed();
+            }
+        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void showDanger()
+    {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("You are about to delete this request, continue?")
+                .setTitle("Danger zone")
+        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if the dude say yes
+                try {
+                    cancelJob();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        })
+        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                 //if the dude says no
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 
@@ -372,6 +429,47 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     //end Calculate path and distance
+
+    public void cancelJob () throws JSONException {
+
+        // Displaying the progress dialog
+        final ProgressDialog loading = ProgressDialog.show(this, "Deleting ","The job is being removed from the job card", false, false);
+
+        String url = String.format(Config.CANCEL_JOB, job.getId(),3);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loading.dismiss();
+
+                        try{
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean error = jsonResponse.getBoolean(Config.ERROR_RESPONSE);
+                            // String serverMsg = jsonResponse.getString(Config.MSG_RESPONSE);
+                            if(!error){
+
+                                Toast.makeText(getApplicationContext(), "Job Deleted", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getApplicationContext(), CabCaller.class ));
+
+                            }
+                        }catch (JSONException e)
+                        {
+                            loading.dismiss();
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }){};
+        RequestQueue requestQueue =  Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+
+    }
 
 
 }

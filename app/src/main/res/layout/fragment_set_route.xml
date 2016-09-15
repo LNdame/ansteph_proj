@@ -24,6 +24,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             >
 
 
@@ -32,11 +33,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtPickUp"
-                android:hint="Pick up location"
+                android:hint="Pickup location (select on the map >>)"
                 android:textSize="12sp"
                 android:layout_weight="1"
+                android:focusable="false"
                 />
             <ImageButton
+                android:background="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_mapmarker"
@@ -49,6 +52,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             >
 
 
@@ -57,11 +61,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtDestination"
-                android:hint="Destination"
+                android:hint="Destination (select on the map >>)"
                 android:textSize="12sp"
                 android:layout_weight="1"
+                android:focusable="false"
                 />
             <ImageButton
+                android:background="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_mapmarker"
@@ -75,27 +81,33 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             >
 
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberSigned"
-                android:ems="10"
+                android:ems="12"
                 android:hint="Propose a fare"
                 android:id="@+id/edtFare"
                 android:textSize="12sp"
+
                 android:layout_weight="1" />
 
 
-            <ImageButton android:visibility="invisible"
+            <ImageButton android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_mapmarker"
                 android:id="@+id/imageButton3" />
 
         </LinearLayout>
+
+
+
+
 
         <!-- Pick up  time-->
         <LinearLayout
@@ -111,24 +123,51 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Select pick up time"
+                android:text="Select pickup time"
                 android:textSize="14dp"
                 android:id="@+id/textView"
+
+
+
                 />
-            <TimePicker
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/timePicker" />
+                >
+
+
+                <EditText
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edtTime"
+                    android:hint="00 : 00"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    />
+                <ImageButton
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_clock"
+                    android:id="@+id/imgbtntime" />
+
+            </LinearLayout>
+
 
 
         </LinearLayout>
 
+        <!-- this checkbox is to come back when the sharing function will be on -->
         <CheckBox
             android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sharing?"
+            android:visibility="invisible"
             android:id="@+id/chkSharing" />
 
         <Button
@@ -137,7 +176,7 @@
             android:text="Hail a cab"
             android:id="@+id/btnHailSubmit"
             android:textColor="@color/white"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:layout_gravity="center_horizontal"/>
 
 

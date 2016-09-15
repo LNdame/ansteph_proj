@@ -184,6 +184,8 @@ public class CabCallerFragment extends Fragment {
 
     private void UpdatePendingJobList(JSONArray jobArray)
     {
+        mGlobalRetainer.get_grPendingJobs().clear();
+
         for (int i=0; i<jobArray.length(); i++)
         {
             try {
@@ -213,6 +215,7 @@ public class CabCallerFragment extends Fragment {
 
     private void UpdateAssignJobList(JSONArray jobArray)
     {
+        mGlobalRetainer.get_grAssignedJobs().clear();
         for (int i=0; i<jobArray.length(); i++)
         {
             try {

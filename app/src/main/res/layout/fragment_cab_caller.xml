@@ -20,36 +20,23 @@
 
         <ImageView
             android:id="@+id/imageView1"
-            android:src="@drawable/img1934x"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:src="@drawable/adban"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         </ImageView>
 
-        <Button
-            android:id="@+id/button"
-            android:text="This Is My Button"
-            android:layout_gravity="center_vertical"
-            android:textSize="30dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-        </Button>
+
 
         <ImageView
             android:id="@+id/imageView2"
-            android:src="@drawable/img2934x"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:src="@drawable/adban"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         </ImageView>
 
-        <TextView
-            android:id="@+id/textView1"
-            android:text="        This Is  My Text "
-            android:textSize="30dp"
-            android:textColor="#0000FF"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </TextView>
+
     </ViewAnimator>
 
 
@@ -59,10 +46,10 @@
         android:layout_height="wrap_content"
         android:text="Call a cab"
         android:layout_margin="20dp"
-
+        android:textColor="@color/white"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimaryDark"
         android:id="@+id/btnCaller"
         android:layout_gravity="center" />
 

@@ -1,11 +1,13 @@
 package ansteph.com.beecab.view.callacab;
 
 import android.app.Activity;
+import android.support.v4.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Location;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -50,7 +52,7 @@ public class SetRouteFragment extends Fragment {
     public SetRouteFragment() {
     }
 
-    EditText edtDestination, edtPickUp , edtFare;
+    EditText edtDestination, edtPickUp , edtFare, edtTime;
     TimePicker picker;
     public static  String TAG = SetRouteFragment.class.getSimpleName();
 
@@ -86,10 +88,17 @@ public class SetRouteFragment extends Fragment {
         Calendar c = Calendar.getInstance();
         c.setTime(c.getTime());
 
-        picker = (TimePicker) rootView.findViewById(R.id.timePicker);
-        picker.setIs24HourView(Boolean.TRUE);
-        picker.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
-        picker.setCurrentMinute(c.get(Calendar.MINUTE));
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+
+        edtTime = (EditText) rootView.findViewById(R.id.edtTime);
+
+        edtTime.setText(String.valueOf(hour) + " : "+String.valueOf(minute));
+
+        //picker = (TimePicker) rootView.findViewById(R.id.timePicker);
+        //picker.setIs24HourView(Boolean.TRUE);
+        //picker.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
+        //picker.setCurrentMinute(c.get(Calendar.MINUTE));
 
 
         ImageButton btnDestShowMap = (ImageButton) rootView.findViewById(R.id.imgbtnDest);
@@ -128,6 +137,15 @@ public class SetRouteFragment extends Fragment {
             }
         });
 
+        ImageButton btntimepick = (ImageButton) rootView.findViewById(R.id.imgbtntime);
+        btntimepick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment nf = new TimePickerFragment();
+                nf.show(getActivity().getSupportFragmentManager(),"TimePicker");
+            }
+        });
+
 
         Button btnHailSubmit = (Button) rootView.findViewById(R.id.btnHailSubmit);
         btnHailSubmit.setOnClickListener(new View.OnClickListener() {
@@ -145,11 +163,10 @@ public class SetRouteFragment extends Fragment {
                    }else{
                        mJourneyRequest.setProposedFare(edtFare.getText().toString().trim());
                    }
-                   int hour =  picker.getCurrentHour();
-                   int minute = picker.getCurrentMinute();
 
 
-                   mJourneyRequest.setPickupTime(hour +":"+minute);
+
+                   mJourneyRequest.setPickupTime(edtTime.getText().toString().trim());
                    mJourneyRequest.setShared(false);
                    mJourneyRequest.setCallAllowed(false);
                    mJourneyRequest.setClientID(mGlobalRetainer.get_grClient().getId());
