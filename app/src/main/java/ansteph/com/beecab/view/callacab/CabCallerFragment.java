@@ -35,6 +35,7 @@ import ansteph.com.beecab.adapter.JobListViewAdapter;
 import ansteph.com.beecab.app.Config;
 import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.model.JourneyRequest;
+import ansteph.com.materialshowcase.MaterialShowcaseView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +55,10 @@ public class CabCallerFragment extends Fragment {
     JobListViewAdapter adapter;
     JobListViewAdapter asAdapter;
     private ListView listViewPending, listViewAssigned;
+
+    Button btnAssigned;
+    Button btnPending;
+    Button btnCaller;
     GlobalRetainer mGlobalRetainer;
 
     LinearLayout llAssigned, llPending;
@@ -96,7 +101,7 @@ public class CabCallerFragment extends Fragment {
 
         mGlobalRetainer =(GlobalRetainer) getActivity().getApplicationContext();
 
-        Button btnCaller = (Button) rootView.findViewById(R.id.btnCaller);
+        btnCaller = (Button) rootView.findViewById(R.id.btnCaller);
         btnCaller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,8 +115,8 @@ public class CabCallerFragment extends Fragment {
 
         final ViewAnimator viewAnimator = (ViewAnimator) rootView.findViewById(R.id.viewAnimator);
 
-        Button btnAssigned = (Button) rootView.findViewById(R.id.btnAssigned);
-        Button btnPending = (Button) rootView.findViewById(R.id.btnPending);
+        btnAssigned = (Button) rootView.findViewById(R.id.btnAssigned);
+         btnPending = (Button) rootView.findViewById(R.id.btnPending);
 
         final Animation inAmin = AnimationUtils.loadAnimation(getActivity(),android.R.anim.slide_in_left);
         final Animation outAmin = AnimationUtils.loadAnimation(getActivity(),android.R.anim.slide_out_right);
@@ -177,6 +182,8 @@ public class CabCallerFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+      //  MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
+        presentShowcaseView(2000);
 
         return rootView;
 
@@ -314,6 +321,20 @@ public class CabCallerFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
 
+    }
+
+    private static final String SHOWCASE_ID = "simple example";
+    private void presentShowcaseView(int withDelay)
+    {
+       // MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
+            new MaterialShowcaseView.Builder(getActivity())
+                    .setTarget(btnCaller)
+                    .setTitleText("See your current jobs")
+                    .setDismissText("Got it")
+                    .setContentText("Click here to see the jobs awaiting responses")
+                    .setDelay(withDelay)// optional but starting animations immediately in onCreate can make them choppy
+                    .singleUse(SHOWCASE_ID) // provide a unique ID used to ensure it is only shown once
+                    .show();
     }
 
 

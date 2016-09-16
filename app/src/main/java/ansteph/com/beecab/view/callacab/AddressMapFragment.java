@@ -48,6 +48,7 @@ import java.util.Locale;
 import ansteph.com.beecab.R;
 import ansteph.com.beecab.helper.PermissionUtils;
 import ansteph.com.beecab.service.Constants;
+import ansteph.com.materialshowcase.MaterialShowcaseView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -482,6 +483,7 @@ public class AddressMapFragment extends Fragment implements
             }
         });
     }
+
 
 
 
