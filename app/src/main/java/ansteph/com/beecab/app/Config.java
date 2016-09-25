@@ -7,8 +7,8 @@ public class Config {
 
     /****************************************************---Domain---*************************************************************/
 
-     //   private static String DOMAIN="http://10.0.0.6:8888/taxi/";
-     private static String DOMAIN="http://10.102.139.55:8888/taxi/";
+       private static String DOMAIN="http://10.0.0.5:8888/taxi/";
+     //private static String DOMAIN="http://10.102.139.55:8888/taxi/";
    // private static String DOMAIN="http://www.beecab.co.za/";
 
     /****************************************************---Route---*************************************************************/
@@ -29,11 +29,13 @@ public class Config {
     public static final String RETRIEVE_ASS_JOB_URL =DOMAIN+"v1/retrieveassignjob/%s";
 
     public static final String CANCEL_JOB = DOMAIN+"v1//updatejob/%s/%s";
-
+    public static final String RETRIEVE_USER_PROFILE_URL = DOMAIN+"v1/retrieve_cl_profile/%s";
+    public static final String UPLOAD_URL =DOMAIN+"v1/save_driver_profile_image";
+    public static final String UPLOAD_URL_EN =DOMAIN+"v1/save_client_profile_en_image";
     /****************************************************---SMS FLAGS---*************************************************************/
 
     // SMS provider identification
-    // It should match with your SMS gateway origin /retrieveallpendingjob/:jrID
+    // It should match with your SMS gateway origin /retrieveallpendingjob/:jrID  save_driver_profile_en_image
     // You can use  MSGIND, TESTER and ALERTS as sender ID
     // If you want custom sender Id, approve MSG91 to get one
     public static final String SMS_ORIGIN = "ANSTEPHIM";
@@ -69,8 +71,11 @@ public class Config {
     public static final String KEY_MOBILE = "mobile";
     public static final String KEY_EMAIL = "email";
 
+    public static final String KEY_EN_IMAGE = "encodeimage";
 
+    public static final String KEY_USERNAME = "username";
     public static final String KEY_OTP = "otp";
+    public static final String TAG_IMAGE_URL = "profile_picture_url";
 
     //JSON Tag from response from server
     public static final String ERROR_RESPONSE= "error";

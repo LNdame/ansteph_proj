@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/BeeCab.iml" filepath="$PROJECT_DIR$/BeeCab.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/materialshowcaselibrary/materialshowcase.iml" filepath="$PROJECT_DIR$/materialshowcaselibrary/materialshowcase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/materialshowcaselibrary/materialshowcaselibrary.iml" filepath="$PROJECT_DIR$/materialshowcaselibrary/materialshowcaselibrary.iml" />
     </modules>
   </component>
 </project>

@@ -28,7 +28,7 @@
 
     <string name="tell"><u>Tell us a bit about yourself!</u> </string>
 
-    <string name="pick_a_role">Select a role, &#8230;  well you know the drill&#8230; I hope.  </string>
+    <string name="pick_a_role">Select a style, &#8230;  well you know the drill&#8230; I hope.  </string>
     <string name="title_activity_taxi_splash">Taxi</string>
     <string name="title_activity_registration_confirmation">Confirmation</string>
 

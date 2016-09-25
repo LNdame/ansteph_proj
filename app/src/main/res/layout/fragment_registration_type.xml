@@ -15,23 +15,30 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/btnTypeClient"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="match_parent"
+            android:background="@null"
             android:padding="25dp"
             android:layout_margin="25dp"
-            android:textColor="@color/textColorPrimary"
-            android:text="Boy"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/mansil"
 
-        <Button
+            />
+
+        <ImageButton
             android:id="@+id/btnTypeDriver"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="match_parent"
+            android:background="@null"
             android:padding="25dp"
             android:layout_margin="25dp"
-            android:textColor="@color/textColorPrimary"
-            android:text="Girl"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/womansil"
+
+            />
+
 
     </LinearLayout>
 
