@@ -55,6 +55,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
 
@@ -78,6 +79,7 @@ public class ViewProfileFragment extends Fragment {
     public static final String TAG = ViewProfileFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
     private int PICK_IMAGE_REQUEST = 1;
     private int RESULT_OK = -1;
     CircleImageView profilePic;
@@ -88,8 +90,6 @@ public class ViewProfileFragment extends Fragment {
     private String mFilePath;
     private String mFileEncodedPath;
 
-    public static final String UPLOAD_URL = "http://10.102.137.163:8888/taxi/v1/upload.php";
-    public static final String UPLOAD_KEY = "image";
 
     GlobalRetainer mGlobalRetainer;
 
@@ -173,14 +173,7 @@ public class ViewProfileFragment extends Fragment {
         btnup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              // uploadImage();
-               // uploadMultipart();
-             try {
-                    SavePictoserver();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                // startActivity(new Intent(getActivity(), UpdatePassword.class));
+                uploadImage();
             }
         });
 
@@ -192,44 +185,28 @@ public class ViewProfileFragment extends Fragment {
     }
 
 
-    public void uploadMultipart()
-    {
-        //getting name for the image
-       // String name = "tdmaster" editText.getText().toString().trim();
-
-        //getting the actual path of the image
-       // String path = getRealPathFromURI(filePath);
-
-
-        //uploading <code></code>
-
-        try{
-
-            String uploadId = UUID.randomUUID().toString();
-
-            //creating a multipart request
-            new MultipartUploadRequest(getActivity(), uploadId, Config.UPLOAD_URL)
-                    .addFileToUpload(mFilePath, "image")//Adding file
-                    .addParameter("id", "tdmaster")
-                    .setNotificationConfig(new UploadNotificationConfig())
-                    .setMaxRetries(2)
-                    .startUpload(); //Starting upload
-
-        }catch (Exception e){
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 
 
-    public String savetoByte(Bitmap bitmapImage) //sunday
-    {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        Log.d("Encodedpath", encodedImage);
-        return  encodedImage;
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
+
+
+
 
     private  void showFileChooser(){
         Intent intent = new Intent();
@@ -259,11 +236,11 @@ public class ViewProfileFragment extends Fragment {
 
                 profilePic.setImageBitmap(bitmap);
 
-                path = saveTointernalStorage(bitmap);
+                path = saveToInternalStorage(bitmap);
                 Toast.makeText(getActivity(), path, Toast.LENGTH_LONG).show();
                 Log.e("path", path);
                 mFilePath = path;
-                mFileEncodedPath=savetoByte(bitmap);
+
             }catch (IOException ie)
             {
                 ie.printStackTrace();
@@ -272,57 +249,8 @@ public class ViewProfileFragment extends Fragment {
 
     }
 
-    public void SavePictoserver() throws JSONException {
-
-     //   String url = ""+String.format(Config.RETRIEVE_ASS_JOB_URL,mGlobalRetainer.get_grClient().getId());
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.UPLOAD_URL_EN,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try{
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean error = jsonResponse.getBoolean(Config.ERROR_RESPONSE);
-                             String serverMsg = jsonResponse.getString(Config.MSG_RESPONSE);
-                            if(!error){
-                                Toast.makeText(getActivity(), serverMsg,Toast.LENGTH_LONG).show();
-
-                            }
-                        }catch (JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), error.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                //Adding the parameters to the request
-                params.put(Config.KEY_JOB_TCID, mGlobalRetainer.get_grClient().getId());
-                params.put(Config.KEY_EN_IMAGE, "jacquehjhsg");
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return super.getHeaders();
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(stringRequest);
-
-    }
-
-
-
-
-    private String saveTointernalStorage(Bitmap bitmapImage) throws IOException {
+    /************************************************save picture in the internal storage***********************************************/
+    private String saveToInternalStorage(Bitmap bitmapImage) throws IOException {
         ContextWrapper cw  = new ContextWrapper(getActivity());
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
@@ -347,152 +275,7 @@ public class ViewProfileFragment extends Fragment {
 
     }
 
-
-    public String getPathnowork(Uri uri){
-
-        Cursor cursor = getActivity().getContentResolver().query(uri,null,null,null,null);
-        cursor.moveToFirst();
-
-        String document_id = cursor.getString(0);
-        document_id = document_id.substring(document_id.lastIndexOf(":")+1);
-        cursor.close();
-
-        cursor = getActivity(). getContentResolver().query(MediaStore.Images.Media.INTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID+" = ? ", new String[]{document_id}, null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-        cursor.close();
-
-        return path;
-    }
-
-
-    @SuppressLint("NewApi")
-    private String getPath(Uri uri) {
-        if( uri == null ) {
-            return null;
-        }
-
-        String[] projection = { MediaStore.Images.Media.DATA };
-
-        Cursor cursor;
-        if(Build.VERSION.SDK_INT >19)
-        {
-            // Will return "image:x*"
-            String wholeID = DocumentsContract.getDocumentId(uri);
-            // Split at colon, use second item in the array
-            String id = wholeID.split(":")[1];
-            // where id is equal to
-            String sel = MediaStore.Images.Media._ID + "=?";
-
-            cursor = getActivity().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    projection, sel, new String[]{ id }, null);
-        }
-        else
-        {
-            cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
-        }
-        String path = null;
-        try
-        {
-            int column_index = cursor
-                    .getColumnIndex(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            path = cursor.getString(column_index).toString();
-            cursor.close();
-        }
-        catch(NullPointerException e) {
-
-        }
-        return path;
-    }
-
-
-
-    private void uploadImage()
-    {
-        class UploadImage extends AsyncTask<Bitmap, Void, String>{
-
-            ProgressDialog loading;
-            RequestHandler rh = new RequestHandler();
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading= ProgressDialog.show(getActivity(),"Uploading...",null, true,true);
-            }
-
-            @Override
-            protected String doInBackground(Bitmap... params) {
-                Bitmap bitmap = params[0];
-               String uploadImage = getStringImage(bitmap);
-
-                HashMap<String, String> data = new HashMap<>();
-                data.put(Config.KEY_JOB_TCID, mGlobalRetainer.get_grClient().getId());
-                data.put(Config.KEY_EN_IMAGE, uploadImage);
-
-          //      String result = rh.sendPostRequest(UPLOAD_URL, data);Config.UPLOAD_URL_EN
-                String result = rh.sendPostRequest(Config.UPLOAD_URL_EN, data);
-              //  Toast.makeText(getActivity(),result,Toast.LENGTH_LONG).show();
-                return result;
-            }
-
-
-            @Override
-            protected void onPostExecute(String s) {
-             super.onPostExecute(s);
-                loading.dismiss();
-              Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
-                txtalert.setText(s);
-            }
-        }
-
-        UploadImage ui =  new UploadImage();
-        ui.execute(bitmap);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    public String getStringImage(Bitmap bmp)
-    {
-        ByteArrayOutputStream baos= new ByteArrayOutputStream() ;
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100,baos);
-        byte [] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
-    }
-
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-
+    /**************************************************Retrieve profile from server*************************************************/
     private void updateUI(JSONArray profile)
     {
         txtCellphone.setText(mGlobalRetainer.get_grClient().getMobile());
@@ -508,7 +291,7 @@ public class ViewProfileFragment extends Fragment {
         if(imageurl!=null)
         {
             //try to load with picasso
-           // profilePic.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            // profilePic.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             Picasso.with(getActivity())
                     .load(imageurl)
                     .resize(200,200)
@@ -519,7 +302,6 @@ public class ViewProfileFragment extends Fragment {
 
     private void getProfileData()
     {
-
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Please wait ","Fetching profile...",false,false);
         String url = String.format(Config.RETRIEVE_USER_PROFILE_URL,mGlobalRetainer.get_grClient().getId());
 
@@ -539,7 +321,7 @@ public class ViewProfileFragment extends Fragment {
                     {
                         //get the user detail from the server
                         JSONArray profile = jsonResponse.getJSONArray("profile");
-                      //  JSONObject user = profile.getJSONObject(0); //getString(Config.KEY_ID)
+                        //  JSONObject user = profile.getJSONObject(0); //getString(Config.KEY_ID)
                         // String carModel, String carNumberPlate, String currentCity, String profileRating
 
                         updateUI(profile);
@@ -555,8 +337,6 @@ public class ViewProfileFragment extends Fragment {
                 }finally {
 
                 }
-
-
 
 
             }
@@ -576,6 +356,90 @@ public class ViewProfileFragment extends Fragment {
         requestQueue.add(stringRequest);
 
     }
+
+
+    /************************************************Load profile from server***********************************************/
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    private String UPLOAD_URL ="http://10.0.0.5:8888/taxi/v1/upload.php";
+
+    private String KEY_IMAGE = "image";
+    private String KEY_NAME = "name";
+
+    private void uploadImage(){
+        //Showing the progress dialog
+        final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.UPLOAD_URL_EN,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        //Disimissing the progress dialog
+                        loading.dismiss();
+                        //Showing toast message of the response
+                        Toast.makeText(getActivity(), s , Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        //Dismissing the progress dialog
+                        loading.dismiss();
+
+                        //Showing toast
+                        Toast.makeText(getActivity(), volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //Converting Bitmap to String
+                String image = getStringImage(bitmap);
+
+                //Getting Image Name
+               // String name = editTextName.getText().toString().trim();
+
+                //Creating parameters
+                Map<String,String> params = new Hashtable<String, String>();
+
+                //Adding parameters
+                params.put(Config.KEY_TC_ID, mGlobalRetainer._grClient.getId());
+                params.put(KEY_IMAGE, image);
+                params.put(KEY_NAME, "jonjon");
+
+                //returning parameters
+                return params;
+            }
+        };
+
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
+
+
 
 
 
