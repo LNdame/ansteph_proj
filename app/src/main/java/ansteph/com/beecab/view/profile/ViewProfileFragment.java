@@ -58,6 +58,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -275,7 +276,7 @@ public class ViewProfileFragment extends Fragment {
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
         //create imageDir
-        File mypath = new File(directory, "profile.jpg");
+        File mypath = new File(directory, "beecabprofile.jpg");
 
         FileOutputStream fos = null;
         try{
@@ -301,7 +302,7 @@ public class ViewProfileFragment extends Fragment {
     {
         if(path!=null){
             try {
-                File f=new File(path, "profile.jpg");
+                File f=new File(path, "beecabprofile.jpg");
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
                 // ImageView img=(ImageView)rootView.findViewById(R.id.imgPicker);
                 profilePic.setImageBitmap(b);
@@ -348,15 +349,13 @@ public class ViewProfileFragment extends Fragment {
                     .resize(200,200)
                     .centerInside().into(profilePic);
 
-
-
-
             try {
                 //extract the bitmap (not working)
-
-                Bitmap downloadedpic = ((BitmapDrawable)profilePic.getDrawable()).getBitmap();
+                URL url = new URL(imageurl);
+                Bitmap downloadedpic = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 //Save the downloaded image in the device app data and save the path in the pref manag
                 sessionManager.setProfilePath(saveToInternalStorage(downloadedpic));
+                Toast.makeText(getActivity(), "Image saved",Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }catch (Exception e)
