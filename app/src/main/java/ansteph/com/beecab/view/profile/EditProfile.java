@@ -17,6 +17,7 @@ import ansteph.com.beecab.view.callacab.CabCallerFragment;
 public class EditProfile extends AppCompatActivity implements  EditUsernameFragment.OnFragmentInteractionListener,
         ViewProfileFragment.OnFragmentInteractionListener{
 
+    private String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,15 @@ public class EditProfile extends AppCompatActivity implements  EditUsernameFragm
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(String text) {
+        setUsername(text);
+    }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -81,6 +81,7 @@ public class Config {
     //JSON Tag from response from server
     public static final String ERROR_RESPONSE= "error";
     public static final String MSG_RESPONSE= "message";
+    public static final String KEY_IMAGE = "image";
 
 
 

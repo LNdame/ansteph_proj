@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -52,6 +54,8 @@ import org.json.JSONObject;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -62,7 +66,9 @@ import java.util.UUID;
 import ansteph.com.beecab.R;
 import ansteph.com.beecab.app.Config;
 import ansteph.com.beecab.app.GlobalRetainer;
+import ansteph.com.beecab.helper.SessionManager;
 import ansteph.com.beecab.service.RequestHandler;
+import ansteph.com.beecab.view.registration.LostPassword;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -92,8 +98,8 @@ public class ViewProfileFragment extends Fragment {
 
 
     GlobalRetainer mGlobalRetainer;
-
-    TextView txtalert , txtUsername, txtCellphone;
+    SessionManager sessionManager;
+    TextView   txtUsername, txtCellphone;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -136,11 +142,11 @@ public class ViewProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mGlobalRetainer = (GlobalRetainer) getActivity().getApplicationContext();
-
+        sessionManager = new SessionManager(getActivity().getApplicationContext());
         View rootView= inflater.inflate(R.layout.fragment_view_profile, container, false);
 
         profilePic = (CircleImageView) rootView.findViewById(R.id.profilepic);
-        txtalert = (TextView) rootView.findViewById(R.id.txtmsg);
+
         txtUsername = (TextView) rootView.findViewById(R.id.username);
         txtCellphone = (TextView) rootView.findViewById(R.id.cellnumber);
 
@@ -159,6 +165,14 @@ public class ViewProfileFragment extends Fragment {
         });
 
 
+        ImageButton imgpwdEdit = (ImageButton) rootView.findViewById(R.id.imgpwdEdit);
+        imgpwdEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), UpdatePassword.class));
+            }
+
+        });
 
         FloatingActionButton fab = (FloatingActionButton)  rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +191,12 @@ public class ViewProfileFragment extends Fragment {
             }
         });
 
-        getProfileData();
+
+
+
+
+        loadImageFromStorage(sessionManager.getProfilePath(), rootView);
+
         //Requesting storage permission
         requestStoragePermission();
 
@@ -217,7 +236,7 @@ public class ViewProfileFragment extends Fragment {
 
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(String uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
@@ -237,7 +256,8 @@ public class ViewProfileFragment extends Fragment {
                 profilePic.setImageBitmap(bitmap);
 
                 path = saveToInternalStorage(bitmap);
-                Toast.makeText(getActivity(), path, Toast.LENGTH_LONG).show();
+                sessionManager.setProfilePath(path);
+
                 Log.e("path", path);
                 mFilePath = path;
 
@@ -275,14 +295,45 @@ public class ViewProfileFragment extends Fragment {
 
     }
 
-    /**************************************************Retrieve profile from server*************************************************/
-    private void updateUI(JSONArray profile)
+    ///get the image where you left it
+
+    private void loadImageFromStorage(String path, View rootView)
     {
+        if(path!=null){
+            try {
+                File f=new File(path, "profile.jpg");
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                // ImageView img=(ImageView)rootView.findViewById(R.id.imgPicker);
+                profilePic.setImageBitmap(b);
+                bitmap = b;
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+
+            txtUsername.setText(sessionManager.getProfileUsername());
+            txtCellphone.setText(mGlobalRetainer.get_grClient().getMobile());
+
+        }else {
+            getProfileData();
+        }
+
+
+    }
+
+    /**************************************************Retrieve profile from server*************************************************/
+    private void updateUI(JSONArray profile)  {
         txtCellphone.setText(mGlobalRetainer.get_grClient().getMobile());
+
         String imageurl =null;
         try {
             JSONObject user = profile.getJSONObject(0);
             txtUsername.setText(user.getString(Config.KEY_USERNAME));
+
+            //save the usernamein the prefmanager
+            sessionManager.setProfileUsername(user.getString(Config.KEY_USERNAME));
+
             imageurl = user.getString(Config.TAG_IMAGE_URL);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -297,6 +348,21 @@ public class ViewProfileFragment extends Fragment {
                     .resize(200,200)
                     .centerInside().into(profilePic);
 
+
+
+
+            try {
+                //extract the bitmap (not working)
+
+                Bitmap downloadedpic = ((BitmapDrawable)profilePic.getDrawable()).getBitmap();
+                //Save the downloaded image in the device app data and save the path in the pref manag
+                sessionManager.setProfilePath(saveToInternalStorage(downloadedpic));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -368,10 +434,7 @@ public class ViewProfileFragment extends Fragment {
         return encodedImage;
     }
 
-    private String UPLOAD_URL ="http://10.0.0.5:8888/taxi/v1/upload.php";
 
-    private String KEY_IMAGE = "image";
-    private String KEY_NAME = "name";
 
     private void uploadImage(){
         //Showing the progress dialog
@@ -401,16 +464,16 @@ public class ViewProfileFragment extends Fragment {
                 //Converting Bitmap to String
                 String image = getStringImage(bitmap);
 
-                //Getting Image Name
-               // String name = editTextName.getText().toString().trim();
+                //Getting username Name
+                String name = txtUsername.getText().toString().trim();
 
                 //Creating parameters
                 Map<String,String> params = new Hashtable<String, String>();
 
                 //Adding parameters
                 params.put(Config.KEY_TC_ID, mGlobalRetainer._grClient.getId());
-                params.put(KEY_IMAGE, image);
-                params.put(KEY_NAME, "jonjon");
+                params.put(Config.KEY_IMAGE, image);
+                params.put(Config.KEY_USERNAME, name);
 
                 //returning parameters
                 return params;
@@ -436,13 +499,19 @@ public class ViewProfileFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String text);
     }
 
 
-
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        String username =( (EditProfile)getActivity()).getUsername();
+        if(username!=null && !username.isEmpty())
+        {
+            txtUsername.setText(username);
+        }
+    }
 
     //storage permission code
     private static final int STORAGE_PERMISSION_CODE = 123;

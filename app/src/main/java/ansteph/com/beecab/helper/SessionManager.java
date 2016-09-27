@@ -44,6 +44,9 @@ public class SessionManager {
     public static final String KEY_ID = "id";
     public static final String KEY_APIKEY = "apikey";
 
+    public static final String KEY_PROFILEPICPATH = "profilepicpath";
+    public static final String KEY_PROFILEUSERNAME= "username";
+
 
     //Constructor
     public SessionManager(Context context)
@@ -167,5 +170,31 @@ public class SessionManager {
         return preferences.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
 
+    public void setProfilePath( String path)
+    {
+        editor.putString(KEY_PROFILEPICPATH, path);
+        editor.commit();
+    }
+
+    public String getProfilePath()
+    {
+        return preferences.getString(KEY_PROFILEPICPATH,null);
+    }
+
+
+
+    public void setProfileUsername( String username)
+    {
+        editor.putString(KEY_PROFILEUSERNAME, username);
+        editor.commit();
+    }
+
+    public String getProfileUsername()
+    {
+        return preferences.getString(KEY_PROFILEUSERNAME,null);
+    }
+
 
     }
+
+

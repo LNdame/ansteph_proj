@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import ansteph.com.beecab.R;
 
@@ -29,7 +30,7 @@ public class EditUsernameFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    EditText txtEditee;
     private OnFragmentInteractionListener mListener;
 
     public EditUsernameFragment() {
@@ -69,6 +70,10 @@ public class EditUsernameFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView= inflater.inflate(R.layout.fragment_edit_username, container, false);
 
+        txtEditee = (EditText) rootView.findViewById(R.id.txtEditee);
+
+        getActivity().setTitle("Edit Username");
+
         Button btnCancel = (Button) rootView.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,13 +81,22 @@ public class EditUsernameFragment extends Fragment {
                  getActivity().onBackPressed();
             }
         });
+
+        Button btnOK = (Button) rootView.findViewById(R.id.btnOK);
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(txtEditee.getText().toString().trim());
+                getActivity().onBackPressed();
+            }
+        });
         return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(String username) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(username);
         }
     }
 
@@ -116,6 +130,6 @@ public class EditUsernameFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String text);
     }
 }
