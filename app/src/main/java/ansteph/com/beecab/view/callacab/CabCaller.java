@@ -119,7 +119,7 @@ public class CabCaller extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
           //  return true;
-            Intent i = new Intent(getApplicationContext(), ImageListView.class);
+            Intent i = new Intent(getApplicationContext(), ActionList.class);
             startActivity(i);
         }
 

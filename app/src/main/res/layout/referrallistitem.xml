@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <TextView
+          android:paddingLeft="5dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="12sp"
+android:layout_gravity="left|center_vertical"
+          android:text="Contact"
+          android:id="@+id/txtContact"/>
+      <TextView
+          android:id="@+id/txtDateSent"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="12sp"
+          android:layout_gravity="center"
+          android:text="01/01/2016 "
+          />
+
+      <ImageView
+          android:visibility="visible"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:layout_gravity="end|center_vertical"
+          android:src="@mipmap/ic_valid"
+          android:id="@+id/imgbtnStatus"
+          android:layout_marginTop="3dp"/>
+  </FrameLayout>
+
+
+
+
+
+</LinearLayout>

@@ -132,6 +132,26 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ansteph.com.beecab.view.profile.EditProfile"/>
         </activity>
+        <activity
+            android:name=".view.referral.ReferralHistory"
+            android:label="@string/title_activity_referral_history"
+            android:parentActivityName=".view.callacab.CabCaller"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ansteph.com.beecab.view.callacab.CabCaller"/>
+        </activity>
+        <activity android:name=".view.callacab.ActionList">
+        </activity>
+        <activity
+            android:name=".view.referral.SendReferral"
+            android:label="@string/title_activity_send_referral"
+            android:parentActivityName=".view.referral.ReferralHistory"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ansteph.com.beecab.view.referral.ReferralHistory"/>
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="ansteph.com.beecab.view.referral.SendReferral"
+    android:background="@color/colorPrimary"
+
+    tools:showIn="@layout/activity_send_referral">
+
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="75dp"
+        android:src="@mipmap/ic_vusi" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Enter the cellphone number or the email of your the friend you want to refer to our awesome network.
+            \nyou will be increasing your referral score"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/txtForgotPwd"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center|bottom"
+            android:layout_alignParentEnd="true"/>
+
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp">
+
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:checked="true"
+                android:text="Cellphone Number"
+                android:onClick="onRadBtnClicked"
+                android:id="@+id/radioCellphone"/>
+
+            <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:text="Email Address"
+            android:id="@+id/radioEmail"
+            android:layout_gravity="right"
+            android:layout_alignParentTop="true"
+            android:onClick="onRadBtnClicked"
+            android:layout_toEndOf="@+id/radioContact"
+            android:layout_marginStart="37dp"/>
+
+
+        </RadioGroup>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wrong cell number/password"
+        android:visibility="gone"
+        android:textSize="12sp"
+        android:layout_marginRight="40dp"
+        android:textColor="@color/alert"
+        android:id="@+id/txtAlertMsg"
+        android:layout_gravity="left|bottom" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_cell"
+            android:layout_width="match_parent"
+            android:textColorHint="@color/colorAccent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/input_cell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="phone"
+                android:hint="Cellphone Contact"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_email"
+            android:layout_width="match_parent"
+            android:textColorHint="@color/colorAccent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="textEmailAddress"
+                android:hint="Email Contact"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+    <Button android:id="@+id/btn_signup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_send_forgotten"
+            android:elevation="8dp"
+            android:background="@color/colorAccent"
+            android:onClick="SendReferral"
+            android:layout_marginTop="40dp"
+            android:textColor="@color/white"/>
+
+</LinearLayout>

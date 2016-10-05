@@ -7,9 +7,10 @@ public class Config {
 
     /****************************************************---Domain---*************************************************************/
 
-       private static String DOMAIN="http://10.0.0.5:8888/taxi/";
-     //private static String DOMAIN="http://10.102.139.55:8888/taxi/";
+      // private static String DOMAIN="http://10.0.0.6:8888/taxi/";
+     //private static String DOMAIN="http://10.102.139.55:8888/taxi/";http://beecab.net/api
    // private static String DOMAIN="http://www.beecab.co.za/";
+    private static String DOMAIN="http://beecab.net/api/";
 
     /****************************************************---Route---*************************************************************/
 
@@ -32,6 +33,10 @@ public class Config {
     public static final String RETRIEVE_USER_PROFILE_URL = DOMAIN+"v1/retrieve_cl_profile/%s";
     public static final String UPLOAD_URL =DOMAIN+"v1/save_driver_profile_image";
     public static final String UPLOAD_URL_EN =DOMAIN+"v1/save_client_profile_en_image";
+
+    public static final String RETRIEVE_REFERRAL_URL =DOMAIN+"v1/retrieve_client_referral/%s";
+    public static final String CREATE_CLIENT_REFERRAL_URL =DOMAIN+"v1/create_client_referral";
+
     /****************************************************---SMS FLAGS---*************************************************************/
 
     // SMS provider identification

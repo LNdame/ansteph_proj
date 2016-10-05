@@ -350,7 +350,7 @@ public class ViewProfileFragment extends Fragment {
                     .centerInside().into(profilePic);
 
             try {
-                //extract the bitmap (not working)
+                //extract the bitmap ( working) maybe u should run it async
                 URL url = new URL(imageurl);
                 Bitmap downloadedpic = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 //Save the downloaded image in the device app data and save the path in the pref manag
