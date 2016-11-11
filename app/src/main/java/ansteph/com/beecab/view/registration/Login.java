@@ -3,7 +3,6 @@ package ansteph.com.beecab.view.registration;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
@@ -24,15 +23,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.RemoteMessage;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -137,6 +131,7 @@ public class Login extends AppCompatActivity {
                             if(!error){
                                 Toast.makeText(getApplicationContext(), serverMsg, Toast.LENGTH_LONG).show();
 
+
                                 //get the user detail from the server
                                 JSONObject profile = jsonResponse.getJSONObject("profile");
 
@@ -149,7 +144,7 @@ public class Login extends AppCompatActivity {
                                 mGlobalretainer.set_grClient(cl);
                                 if(mGlobalretainer.get_grClient()!=null){
 
-                                    Toast.makeText(getApplicationContext(), pwd.substring(0,4), Toast.LENGTH_LONG).show();
+
                                     //to notify user
                                    // NotifyUser();
                                     if((pwd.substring(0,5)).equals("prov_")){

@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -57,8 +55,8 @@ public class ReferralHistory extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                  //      .setAction("Action", null).show();
 
                 startActivity(new Intent(getApplication(), SendReferral.class));
             }
@@ -85,7 +83,7 @@ public class ReferralHistory extends AppCompatActivity {
         mRefferalListView.setAdapter(adapter);
 
         try {
-            retrievePendingJobs();
+            retrieveReferral();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -180,7 +178,7 @@ public class ReferralHistory extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public void retrievePendingJobs() throws JSONException {
+    public void retrieveReferral() throws JSONException {
 
         String url = ""+String.format(Config.RETRIEVE_REFERRAL_URL,mGlobalRetainer.get_grClient().getId());
 

@@ -23,7 +23,7 @@
                 android:minWidth="100dp"
                 android:minHeight="200dp"
                 android:contentDescription="@null"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:id="@+id/image"
                 />
 

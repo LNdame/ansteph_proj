@@ -37,8 +37,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ansteph.com.beecab.view.registration.Login"/>
         </activity>
-        <activity android:name=".view.callacab.CabCaller">
-        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -151,6 +149,11 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ansteph.com.beecab.view.referral.ReferralHistory"/>
+        </activity>
+        <activity
+            android:name=".view.callacab.CabCaller"
+            android:label="@string/title_activity_cab_caller"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

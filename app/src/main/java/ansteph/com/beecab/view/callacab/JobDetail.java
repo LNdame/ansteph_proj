@@ -122,12 +122,30 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
         btnJobback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             onBackPressed();
+              if(job.getStatus() == 2)  {
+                  showCloseWarming();
+              }else{
+             onBackPressed();}
+
             }
         });
 
+
+        changeBackButton();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+
+
+    public void changeBackButton()
+    {
+        if(job.getStatus() == 2)
+        {
+            btnJobback.setText("Close Job");
+        }
+    }
+
+
 
     private void showDanger()
     {
@@ -152,6 +170,34 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
                  //if the dude says no
             }
         });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showCloseWarming()
+    {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("You should only close job once you are done with the cab driver, continue?")
+                .setTitle("You are about to close this job")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //if the dude say yes
+                        try {
+                            closeJob();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //if the dude says no
+                    }
+                });
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -435,7 +481,7 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
         // Displaying the progress dialog
         final ProgressDialog loading = ProgressDialog.show(this, "Deleting ","The job is being removed from the job card", false, false);
 
-        String url = String.format(Config.CANCEL_JOB, job.getId(),3);
+        String url = String.format(Config.CANCEL_JOB, job.getId(),4);
 
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, url,
                 new Response.Listener<String>() {
@@ -471,5 +517,47 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
+
+
+    public void closeJob () throws JSONException {
+
+        // Displaying the progress dialog
+        final ProgressDialog loading = ProgressDialog.show(this, "Closing ","Thank you for your business see you next time!", false, false);
+
+        String url = String.format(Config.CANCEL_JOB, job.getId(),3);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loading.dismiss();
+
+                        try{
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean error = jsonResponse.getBoolean(Config.ERROR_RESPONSE);
+                            // String serverMsg = jsonResponse.getString(Config.MSG_RESPONSE);
+                            if(!error){
+
+                                Toast.makeText(getApplicationContext(), "Job Closed", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getApplicationContext(), CabCaller.class ));
+
+                            }
+                        }catch (JSONException e)
+                        {
+                            loading.dismiss();
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }){};
+        RequestQueue requestQueue =  Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+
+    }
 
 }

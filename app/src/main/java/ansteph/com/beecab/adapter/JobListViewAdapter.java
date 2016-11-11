@@ -31,6 +31,8 @@ public class JobListViewAdapter extends ArrayAdapter<JourneyRequest> {
 
    ArrayList<JourneyRequest>  jobs  = null;
 
+
+
     public JobListViewAdapter(Context context, int layoutResourceId, ArrayList<JourneyRequest> jobs) {
         super(context, layoutResourceId, jobs);
         this.context = context;
@@ -77,6 +79,11 @@ public class JobListViewAdapter extends ArrayAdapter<JourneyRequest> {
         holder.txtFare.setText(jr.getProposedFare());
         holder.txtTime.setText(jr.getPickupTime());
 
+        if(jr.getStatus()==2)
+        {
+            holder.btnDetails.setBackgroundColor(context.getResources().getColor( R.color.green));
+            holder.btnDetails.setText("En route");
+        }
 
         holder.btnDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,12 +96,16 @@ public class JobListViewAdapter extends ArrayAdapter<JourneyRequest> {
             }
         });
 
+
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(jr.getStatus()==0) //only allowed to see the responses if the status is pending
+                {
+
                 Intent i = new Intent(context, JobResponder.class);
                 i.putExtra("job",jr);
-                context.startActivity(i);
+                context.startActivity(i);}
             }
         });
 
@@ -110,5 +121,15 @@ public class JobListViewAdapter extends ArrayAdapter<JourneyRequest> {
         Button btnDetails;
         ImageView imgbtnDrop;
     }
+
+
+    /**
+     * status legend
+     * 0 = pending
+     * 1= assigned
+     * 2=confirmed by driver
+     * 3=close
+     * 4=cancel
+     * */
 
 }

@@ -167,4 +167,10 @@
         <item name="android:scaleType">centerCrop</item>
     </style>
 
+
+    <style name="JobTabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/colorPrimary</item>
+        <item name="tabBackground">@color/windowBackground</item>
+    </style>
+
 </resources>

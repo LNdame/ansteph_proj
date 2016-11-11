@@ -70,16 +70,20 @@ GlobalRetainer mGlobalRetainer;
 
         journeyRequest = null;
 
+
+        // Save a reference to the context
+        mContext = this;
+
         Bundle b = getIntent().getExtras();
         if(b!=null)
         {
             journeyRequest =(JourneyRequest) b.getSerializable("job");
+
+
         }
 
 
 
-        // Save a reference to the context
-        mContext = this;
 
         // Bind the MaterialListView to a variable
         mListView = (MaterialListView) findViewById(R.id.material_listview);
@@ -162,7 +166,7 @@ GlobalRetainer mGlobalRetainer;
 
                 .addAction(R.id.left_text_button, new TextViewAction(this)
                         .setText("Assign")
-                        .setTextResourceColor(R.color.black_button).setListener(new OnActionClickListener() {
+                        .setTextResourceColor(R.color.orange_button).setListener(new OnActionClickListener() {
                             @Override
                             public void onActionClicked(View view, Card card) {
                                 try {
@@ -177,9 +181,9 @@ GlobalRetainer mGlobalRetainer;
                         }))
 
                 .addAction(R.id.right_text_button, new TextViewAction(this)
-                        .setText("Accept")
-                        .setTextResourceColor(R.color.orange_button))
-        .setDrawable(R.drawable.img1934x)
+                        .setText("View profile")
+                        .setTextResourceColor(R.color.black_button))
+                        .setDrawable((jr.getCoName()=="BeeCab")? R.drawable.fleet:R.drawable.taxiicon)
                 .endConfig()
                 .build();
     }
@@ -190,9 +194,9 @@ GlobalRetainer mGlobalRetainer;
     public void retrieveJobReponses () throws JSONException {
 
         // Displaying the progress dialog
-        final ProgressDialog loading = ProgressDialog.show(this, "Getting Jobs","Just retrieving the response", false, false);
+        final ProgressDialog loading = ProgressDialog.show(this, "Getting responses","Just retrieving the responses", false, false);
 
-        String url = String.format(Config.REGISTER_JOB_RESPONSE, 4);
+        String url = String.format(Config.REGISTER_JOB_RESPONSE, journeyRequest.getId());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -206,7 +210,6 @@ GlobalRetainer mGlobalRetainer;
                             // String serverMsg = jsonResponse.getString(Config.MSG_RESPONSE);
                             if(!error){
                                 loading.dismiss();
-                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                                 //JSONObject jobsList = jsonResponse.getJSONObject("jobs");
                                 JSONArray jobsjsonArray = jsonResponse.getJSONArray("jobs");
 
@@ -231,6 +234,11 @@ GlobalRetainer mGlobalRetainer;
 
     }
 
+    public void gotoCabCaller()
+    {
+        Intent i = new Intent(getApplicationContext(), CabCaller.class);
+        startActivity(i);
+    }
 
     public void assignRequest (final JourneyRequestResponse jrr) throws JSONException{
         final ProgressDialog loading = ProgressDialog.show(this, "Sending Job","Asking the driver to come get you", false, false);
@@ -250,10 +258,9 @@ GlobalRetainer mGlobalRetainer;
                                 //Move back to cabcaller
                                 Toast.makeText(getApplication(), serverMsg, Toast.LENGTH_LONG).show();
                                 //if success redirect to cabcaller lander
-                               // Intent i = new Intent(getActivity(), CabCaller.class);
-                               // startActivity(i);
+                                gotoCabCaller();
                             }else{
-                               // Toast.makeText(getActivity(), serverMsg, Toast.LENGTH_LONG).show();
+                               Toast.makeText(getApplicationContext(), serverMsg, Toast.LENGTH_LONG).show();
 
                             }
 

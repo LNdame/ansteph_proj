@@ -146,6 +146,8 @@ public class RegistrationFragment extends Fragment {
                 }
             }
         });
+
+
        /* btnCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,21 +162,21 @@ public class RegistrationFragment extends Fragment {
 
               if (!isEmailOk())
               {
-                  txtReg.setText("Invalid email address ");
+                  txtReg.setText(R.string.invalid_email);
                   txtReg.setTextColor(Color.RED);
                   return;
               }
 
               if(txtFullName.getText().toString().isEmpty() || txtMobile.getText().toString().isEmpty())
               {
-                  txtReg.setText("Missing some critical information");
+                  txtReg.setText(R.string.missing_info);
                   txtReg.setTextColor(Color.YELLOW);
                   return;
               }
 
               if(txtPassword.getText().toString().length()<6)
               {
-                  txtReg.setText("The password provided is too short (min. 6 characters)");
+                  txtReg.setText(R.string.pwd_short);
                   txtReg.setTextColor(Color.YELLOW);
                   return;
               }
@@ -189,7 +191,7 @@ public class RegistrationFragment extends Fragment {
                   }
 
               }else{
-                  txtReg.setText("The password and the confirmed password do not match ");
+                  txtReg.setText(R.string.pwd_mismatch);
                   txtReg.setTextColor(Color.RED);
               }
 
@@ -280,7 +282,7 @@ public class RegistrationFragment extends Fragment {
                                 //asking user to confirm OTP
                                 confirmOtp();
                             }else{ //check for message already existing user
-                                Toast.makeText(getActivity(), serverMsg, Toast.LENGTH_LONG).show();
+                                 Toast.makeText(getActivity(), serverMsg, Toast.LENGTH_LONG).show();
 
                             }
 

@@ -128,7 +128,7 @@ public class CheckOTPFragment extends Fragment {
 
     public void gotoLogin()
     {
-       /* Fragment fragment = new RegSuccessFragment();
+        Fragment fragment = new RegSuccessFragment();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
 
@@ -136,9 +136,9 @@ public class CheckOTPFragment extends Fragment {
 
         fragmentTransaction.replace(R.id.container_body, fragment);
         fragmentTransaction.commit();
-        setTitle("Edit profile");*/
-        Intent i = new Intent (getActivity(),Login.class);
-        startActivity(i);
+        setTitle("Success!");
+       // Intent i = new Intent (getActivity(),Login.class);
+      //  startActivity(i);
     }
 
     @Override

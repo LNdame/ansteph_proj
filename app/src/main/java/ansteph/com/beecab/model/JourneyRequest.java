@@ -10,7 +10,7 @@ public class JourneyRequest implements Serializable{
 
 
 
-    private int id ;
+    private int id,status ;
     private String pickupAddr;
     private String destinationAddr;
     private String pickupTime;
@@ -161,5 +161,11 @@ public class JourneyRequest implements Serializable{
         isShared = shared;
     }
 
+    public int getStatus() {
+        return status;
+    }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }

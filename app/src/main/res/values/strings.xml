@@ -223,4 +223,11 @@
     <string name="title_activity_send_referral">SendReferral</string>
 
 
+    <string name="invalid_email">Invalid email address</string>
+    <string name="missing_info">Missing some critical information</string>
+    <string name="pwd_short">The password provided is too short (min. 6 characters)</string>
+    <string name="pwd_mismatch">The password and the confirmed password do not match</string>
+    <string name="title_activity_cab_caller">CabCaller</string>
+
+
 </resources>

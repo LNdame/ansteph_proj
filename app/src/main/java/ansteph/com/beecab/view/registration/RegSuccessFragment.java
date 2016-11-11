@@ -1,11 +1,13 @@
 package ansteph.com.beecab.view.registration;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import ansteph.com.beecab.R;
 
@@ -61,7 +63,18 @@ public class RegSuccessFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reg_success, container, false);
+       View rootView= inflater.inflate(R.layout.fragment_reg_success, container, false);
+
+        Button backtolog = (Button) rootView.findViewById(R.id.btnbacktologin);
+
+        backtolog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), Login.class));
+            }
+        });
+
+        return rootView;
     }
 
 }

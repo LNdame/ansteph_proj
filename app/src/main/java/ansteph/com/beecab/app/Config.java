@@ -7,7 +7,7 @@ public class Config {
 
     /****************************************************---Domain---*************************************************************/
 
-      // private static String DOMAIN="http://10.0.0.6:8888/taxi/";
+     // private static String DOMAIN="http://10.0.0.3:8888/taxi/";
      //private static String DOMAIN="http://10.102.139.55:8888/taxi/";http://beecab.net/api
    // private static String DOMAIN="http://www.beecab.co.za/";
     private static String DOMAIN="http://beecab.net/api/";
