@@ -155,6 +155,24 @@
             android:label="@string/title_activity_cab_caller"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".view.extraaction.Credits"
+            android:label="@string/title_activity_credits"
+            android:parentActivityName=".view.callacab.ActionList"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ansteph.com.beecab.view.callacab.ActionList"/>
+        </activity>
+        <activity
+            android:name=".view.extraaction.Contact"
+            android:label="@string/title_activity_contact"
+            android:parentActivityName=".view.callacab.ActionList"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ansteph.com.beecab.view.callacab.ActionList"/>
+        </activity>
     </application>
 
 </manifest>

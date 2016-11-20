@@ -189,6 +189,7 @@ public class ViewProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 uploadImage();
+                sessionManager.setProfileUsername(txtUsername.getText().toString());
             }
         });
 
@@ -423,7 +424,7 @@ public class ViewProfileFragment extends Fragment {
     }
 
 
-    /************************************************Load profile from server***********************************************/
+    /************************************************Load profile to server***********************************************/
 
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -437,7 +438,7 @@ public class ViewProfileFragment extends Fragment {
 
     private void uploadImage(){
         //Showing the progress dialog
-        final ProgressDialog loading = ProgressDialog.show(getActivity(),"Uploading...","Please wait...",false,false);
+        final ProgressDialog loading = ProgressDialog.show(getActivity(),"Saving the changes...","Please wait...",false,false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.UPLOAD_URL_EN,
                 new Response.Listener<String>() {
                     @Override
@@ -445,7 +446,7 @@ public class ViewProfileFragment extends Fragment {
                         //Disimissing the progress dialog
                         loading.dismiss();
                         //Showing toast message of the response
-                        Toast.makeText(getActivity(), s , Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Saved" , Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {
@@ -455,7 +456,7 @@ public class ViewProfileFragment extends Fragment {
                         loading.dismiss();
 
                         //Showing toast
-                        Toast.makeText(getActivity(), volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override

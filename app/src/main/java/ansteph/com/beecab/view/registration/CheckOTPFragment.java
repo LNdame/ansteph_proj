@@ -43,17 +43,22 @@ public class CheckOTPFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String TAG = CheckOTPFragment.class.getSimpleName();
+    public static  String MOBILE ="";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    private String mobile;
+
     //inputOtp
     EditText txtOTP;
     //Volley RequestQueue
     private RequestQueue requestQueue;
     String otp="";
+
+    Boolean isfirstclick = true;
 
     public CheckOTPFragment() {
         // Required empty public constructor
@@ -107,6 +112,25 @@ public class CheckOTPFragment extends Fragment {
                     }
                 }else{
                     Toast.makeText(getActivity(), "The code is still empty",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+        Button btnResend = (Button) rootView.findViewById(R.id.btn_resend_otp);
+        btnResend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isfirstclick)
+                {
+                    isfirstclick = false;
+                    try {
+                        resendOTP();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
         });
@@ -215,5 +239,67 @@ public class CheckOTPFragment extends Fragment {
 
         //Adding request the queue
         requestQueue.add(stringRequest);
+    }
+
+
+
+    private void resendOTP() throws JSONException{
+        final ProgressDialog loading = ProgressDialog.show(getActivity(),"Resending","Please wait for the sms... ",false,false);
+
+        String url = ""+String.format(Config.URL_RESEND_OTP,MOBILE);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response) {
+                        loading.dismiss();
+                        try{
+                            //creating the Json object from the response
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean error = jsonResponse.getBoolean(Config.ERROR_RESPONSE);
+                            String serverMsg = jsonResponse.getString("message");
+
+                            if(!error)
+                            {
+                                //go to back to login page
+                                Toast.makeText(getActivity(), "Request sent",Toast.LENGTH_LONG).show();
+                                isfirstclick= true;
+                            }else{
+                                Toast.makeText(getActivity(), "Sorry we couldn't resend an OTP, please try again",Toast.LENGTH_LONG).show();
+                                txtOTP.setText("");
+                                isfirstclick = true;
+                            }
+
+                        }catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loading.dismiss();
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show();
+
+                    }
+                }){
+
+        };
+
+        //Adding request the queue
+        requestQueue.add(stringRequest);
+    }
+
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

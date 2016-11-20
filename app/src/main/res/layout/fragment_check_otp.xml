@@ -71,5 +71,20 @@
             android:textColor="@android:color/white"
             android:textSize="14dp" />
 
+
+
+        <Button
+            style="@style/buttonStyle"
+            android:id="@+id/btn_resend_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/btn_resend_otp"
+            android:textColor="@android:color/white"
+            android:textSize="14dp" />
     </LinearLayout>
 </LinearLayout>

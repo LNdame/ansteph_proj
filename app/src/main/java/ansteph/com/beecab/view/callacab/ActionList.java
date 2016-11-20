@@ -11,6 +11,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import ansteph.com.beecab.R;
+import ansteph.com.beecab.view.extraaction.Contact;
+import ansteph.com.beecab.view.extraaction.Credits;
 import ansteph.com.beecab.view.profile.EditProfile;
 import ansteph.com.beecab.view.referral.ReferralHistory;
 
@@ -49,8 +51,10 @@ public class ActionList extends AppCompatActivity {
                         startActivity(i); break;
                     case 1 : startActivity(new Intent(getApplicationContext(), ReferralHistory.class));
                          break;
-                    case 2:
-                    case 3 :
+                    case 2:startActivity(new Intent(getApplicationContext(), Credits.class));
+                        break;
+                    case 3 :startActivity(new Intent(getApplicationContext(), Contact.class));
+                        break;
                     case 4 :Intent j = new Intent(getApplicationContext(), EditProfile.class);
                         startActivity(j); break;
                     default:

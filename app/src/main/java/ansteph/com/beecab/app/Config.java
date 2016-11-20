@@ -37,6 +37,8 @@ public class Config {
     public static final String RETRIEVE_REFERRAL_URL =DOMAIN+"v1/retrieve_client_referral/%s";
     public static final String CREATE_CLIENT_REFERRAL_URL =DOMAIN+"v1/create_client_referral";
 
+    public static final String URL_RESEND_OTP = DOMAIN+"v1/resendotp/%s";
+
     /****************************************************---SMS FLAGS---*************************************************************/
 
     // SMS provider identification

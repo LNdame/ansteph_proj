@@ -322,6 +322,7 @@ public class RegistrationFragment extends Fragment {
     private void confirmOtp(){
         //switch fragment to await confirmation of the otp
         Fragment fragment = new CheckOTPFragment();
+        CheckOTPFragment.MOBILE = mobile;
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
 

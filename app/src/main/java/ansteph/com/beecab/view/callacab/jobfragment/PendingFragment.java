@@ -2,6 +2,7 @@ package ansteph.com.beecab.view.callacab.jobfragment;
 
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import ansteph.com.beecab.R;
 import ansteph.com.beecab.adapter.JobListViewAdapter;
@@ -112,6 +114,11 @@ public class PendingFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        primeTimer();
+    }
 
     private void UpdatePendingJobList(JSONArray jobArray)
     {
@@ -181,4 +188,27 @@ public class PendingFragment extends Fragment {
     }
 
 
+    private void primeTimer()
+    {
+
+
+        long countdownmill = 120000;
+
+        new CountDownTimer(countdownmill, 30000){
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                try {
+                    retrievePendingJobs();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                primeTimer();
+            }
+        }.start();
+    }
 }

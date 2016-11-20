@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_contact"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="ansteph.com.beecab.view.extraaction.Contact"
+    tools:showIn="@layout/activity_contact">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:hint="Please describe your problem"
+        android:id="@+id/edtProblem"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="50dp"
+        android:id="@+id/view"
+        android:layout_below="@+id/edtProblem"
+        android:background="@color/colorAccent"
+        />
+
+    <Button
+        android:text="Please read our FAQ"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       style="@style/buttonStyle"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnfaq"
+        android:layout_below="@+id/view"
+        android:layout_alignParentStart="true"/>
+</RelativeLayout>
