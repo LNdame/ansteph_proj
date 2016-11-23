@@ -31,11 +31,17 @@ public class Config {
 
     public static final String CANCEL_JOB = DOMAIN+"v1//updatejob/%s/%s";
     public static final String RETRIEVE_USER_PROFILE_URL = DOMAIN+"v1/retrieve_cl_profile/%s";
+
+    public static final String RETRIEVE_DRIVER_PROFILE_URL = DOMAIN+"v1/retrieve_dr_profile_for_client/%s";
+
+
     public static final String UPLOAD_URL =DOMAIN+"v1/save_driver_profile_image";
     public static final String UPLOAD_URL_EN =DOMAIN+"v1/save_client_profile_en_image";
 
     public static final String RETRIEVE_REFERRAL_URL =DOMAIN+"v1/retrieve_client_referral/%s";
     public static final String CREATE_CLIENT_REFERRAL_URL =DOMAIN+"v1/create_client_referral";
+
+    public static final String RETRIEVE_USER_IMAGE_URL = DOMAIN+"v1/retrieve_dr_profile_image/%s";
 
     public static final String URL_RESEND_OTP = DOMAIN+"v1/resendotp/%s";
 
@@ -85,13 +91,25 @@ public class Config {
     public static final String KEY_OTP = "otp";
     public static final String TAG_IMAGE_URL = "profile_picture_url";
 
+    public static final String TAG_DRIVER_IMAGE_URL = "car_picture_url";
     //JSON Tag from response from server
     public static final String ERROR_RESPONSE= "error";
     public static final String MSG_RESPONSE= "message";
     public static final String KEY_IMAGE = "image";
 
 
+    public static final String KEY_CAR_MODEL = "car_model";
+    public static final String KEY_CAR_NUMPLATE = "car_numberplate";
+    public static final String KEY_PRO_ID= "taxi_driver_id";
+    public static final String KEY_CURRENT_CITY = "current_city";
+    public static final String KEY_PRO_RATING = "profile_rating";
 
+    public static final String KEY_DRIVER_NAME = "td_name";
+    public static final String KEY_DRIVER_EMAIL = "td_email";
+    public static final String KEY_DRIVER_MOBILE = "td_mobile";
+
+    public static final String KEY_DRIVER_LICENSE = "td_license";
+    public static final String KEY_DRIVER_YEAR = "td_year";
 
 
 

@@ -23,6 +23,7 @@ public class GlobalRetainer extends Application {
 
     public Client _grClient = new Client();   //(only one per login)
 
+    public JourneyRequest _currentInspectedJR = new JourneyRequest();
 
 
     public Client get_grClient() {
@@ -47,6 +48,15 @@ public class GlobalRetainer extends Application {
 
     public void set_grAssignedJobs(ArrayList<JourneyRequest> _grAssignedJobs) {
         this._grAssignedJobs = _grAssignedJobs;
+    }
+
+
+    public JourneyRequest get_currentInspectedJR() {
+        return _currentInspectedJR;
+    }
+
+    public void set_currentInspectedJR(JourneyRequest _currentInspectedJR) {
+        this._currentInspectedJR = _currentInspectedJR;
     }
 
     public void addPendingJob(JourneyRequest jr)

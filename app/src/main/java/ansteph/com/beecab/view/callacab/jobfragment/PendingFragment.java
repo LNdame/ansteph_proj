@@ -202,6 +202,9 @@ public class PendingFragment extends Fragment {
                     retrievePendingJobs();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
                 }
             }
 

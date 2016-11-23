@@ -129,7 +129,7 @@
 
     <string name="slide_4_title">All about YOU</string>
     <string name="slide_4_desc">Please do not forget to complete your profile,\n Settings ->Profile </string>
-    <string name="title_activity_lost_password">LostPassword</string>
+    <string name="title_activity_lost_password">Lost Password</string>
     <string name="title_activity_update_password">Update Password</string>
     <string name="title_activity_referral_history">Referral History</string>
     <string name="large_text">
@@ -236,5 +236,6 @@
     <string name="link_credits">www.inqb8.co.za - www.beecab.net - www.beecab.co.za</string>
     <string name="title_activity_credits">Credits</string>
     <string name="title_activity_contact">Contact</string>
+    <string name="title_activity_driver_profile_view">Driver Profile</string>
 
 </resources>

@@ -200,6 +200,9 @@ public class AssignedFragment extends Fragment {
                     retrieveAssignedJobs();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
                 }
             }
 

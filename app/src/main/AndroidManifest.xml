@@ -173,6 +173,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ansteph.com.beecab.view.callacab.ActionList"/>
         </activity>
+        <activity
+            android:name=".view.profile.DriverProfileView"
+            android:label="@string/title_activity_driver_profile_view"
+            android:parentActivityName=".view.callacab.JobResponder"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ansteph.com.beecab.view.callacab.JobResponder"/>
+        </activity>
     </application>
 
 </manifest>

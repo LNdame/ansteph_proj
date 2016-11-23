@@ -47,6 +47,7 @@ import ansteph.com.beecab.card.listener.OnDismissCallback;
 import ansteph.com.beecab.card.listener.RecyclerItemClickListener;
 import ansteph.com.beecab.model.JourneyRequest;
 import ansteph.com.beecab.model.JourneyRequestResponse;
+import ansteph.com.beecab.view.profile.DriverProfileView;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 //add a thtow error if no journey request found
@@ -79,7 +80,10 @@ GlobalRetainer mGlobalRetainer;
         {
             journeyRequest =(JourneyRequest) b.getSerializable("job");
 
+            mGlobalRetainer.set_currentInspectedJR(journeyRequest);
 
+        }else{
+            journeyRequest= mGlobalRetainer.get_currentInspectedJR();
         }
 
 
@@ -182,7 +186,15 @@ GlobalRetainer mGlobalRetainer;
 
                 .addAction(R.id.right_text_button, new TextViewAction(this)
                         .setText("View profile")
-                        .setTextResourceColor(R.color.black_button))
+                        .setTextResourceColor(R.color.black_button).setListener(new OnActionClickListener() {
+                            @Override
+                            public void onActionClicked(View view, Card card) {
+                                Intent i = new Intent(getApplicationContext(), DriverProfileView.class);
+                                i.putExtra("taxiID", jr.getTaxiID());
+                                startActivity(i);
+
+                            }
+                        }))
                         .setDrawable((jr.getCoName()=="BeeCab")? R.drawable.fleet:R.drawable.taxiicon)
                 .endConfig()
                 .build();
