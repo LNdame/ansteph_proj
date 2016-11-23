@@ -1,6 +1,7 @@
 package ansteph.com.beecab.app;
 
 import android.app.Application;
+import android.content.Context;
 
 import java.util.ArrayList;
 
@@ -14,8 +15,23 @@ import ansteph.com.beecab.model.JourneyRequest;
  */
 public class GlobalRetainer extends Application {
 
+
+    private static GlobalRetainer mInstance;
+    private static Context mAppContext;
+
     public GlobalRetainer()
     {}
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        GlobalRetainer.mAppContext = getApplicationContext();
+        mInstance = this;
+    }
+
+    public static GlobalRetainer getInstance(){
+        return mInstance;
+    }
 
 
     public ArrayList<JourneyRequest > _grPendingJobs = new ArrayList<>();
@@ -67,5 +83,13 @@ public class GlobalRetainer extends Application {
     public void addAssignedJob(JourneyRequest jr)
     {
         this._grAssignedJobs.add(jr);
+    }
+
+    public static Context getAppContext() {
+        return mAppContext;
+    }
+
+    public static void setAppContext(Context mAppContext) {
+        GlobalRetainer.mAppContext = mAppContext;
     }
 }

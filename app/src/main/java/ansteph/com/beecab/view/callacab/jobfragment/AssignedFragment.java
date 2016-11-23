@@ -180,7 +180,7 @@ public class AssignedFragment extends Fragment {
 
             }
         }){};
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        RequestQueue requestQueue = Volley.newRequestQueue(GlobalRetainer.getAppContext());
         requestQueue.add(stringRequest);
 
     }

@@ -182,7 +182,8 @@ public class PendingFragment extends Fragment {
 
             }
         }){};
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+      //  RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(GlobalRetainer.getAppContext());
         requestQueue.add(stringRequest);
 
     }
