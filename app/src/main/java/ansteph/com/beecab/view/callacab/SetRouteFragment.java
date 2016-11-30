@@ -43,7 +43,7 @@ import ansteph.com.beecab.service.Constants;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class SetRouteFragment extends Fragment {
+public class SetRouteFragment extends Fragment implements View.OnClickListener {
 
 
     //Volley RequestQueue
@@ -101,41 +101,16 @@ public class SetRouteFragment extends Fragment {
         //picker.setCurrentMinute(c.get(Calendar.MINUTE));
 
 
-        ImageButton btnDestShowMap = (ImageButton) rootView.findViewById(R.id.imgbtnDest);
-        btnDestShowMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle args = new Bundle();
-                args.putInt(Constants.ADDRESS, Constants.DESTINATION_GRAB);
+        edtDestination.setOnClickListener(this);
+        edtPickUp.setOnClickListener(this);
 
-                Fragment fragment = new AddressMapFragment();
-                fragment.setArguments(args);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
-                        .addToBackStack(AddressMapFragment.TAG);
-                fragmentTransaction.replace(R.id.container_body, fragment,AddressMapFragment.TAG);
-                fragmentTransaction.commit();
-            }
-        });
+
+        ImageButton btnDestShowMap = (ImageButton) rootView.findViewById(R.id.imgbtnDest);
+        btnDestShowMap.setOnClickListener(this);
 
 
         ImageButton btnPickUpShowMap = (ImageButton) rootView.findViewById(R.id.imgbtnPick);
-        btnPickUpShowMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Bundle args = new Bundle();
-                args.putInt(Constants.ADDRESS, Constants.PICKUP_GRAB);
-
-                Fragment fragment = new AddressMapFragment();
-                fragment.setArguments(args);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
-                        .addToBackStack(AddressMapFragment.TAG);
-                fragmentTransaction.replace(R.id.container_body, fragment,AddressMapFragment.TAG);
-                fragmentTransaction.commit();
-            }
-        });
+        btnPickUpShowMap.setOnClickListener(this);
 
         ImageButton btntimepick = (ImageButton) rootView.findViewById(R.id.imgbtntime);
         btntimepick.setOnClickListener(new View.OnClickListener() {
@@ -303,5 +278,42 @@ public class SetRouteFragment extends Fragment {
     public void onResume() {
         super.onResume();
        // Toast.makeText(getActivity(),"I just resumed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = null;
+        Fragment fragment = null;
+        Bundle args =null;
+        switch (v.getId())
+        {
+            case R.id.imgbtnDest :
+            case R.id.edtDestination : args = new Bundle();
+                args.putInt(Constants.ADDRESS, Constants.DESTINATION_GRAB);
+
+                 fragment = new AddressMapFragment();
+                fragment.setArguments(args);
+
+              fragmentTransaction = fragmentManager.beginTransaction()
+                        .addToBackStack(AddressMapFragment.TAG);
+                fragmentTransaction.replace(R.id.container_body, fragment,AddressMapFragment.TAG);
+                fragmentTransaction.commit(); break;
+
+            case R.id.imgbtnPick :
+            case R.id.edtPickUp : args = new Bundle();
+                args.putInt(Constants.ADDRESS, Constants.PICKUP_GRAB);
+
+               fragment = new AddressMapFragment();
+                fragment.setArguments(args);
+
+              fragmentTransaction = fragmentManager.beginTransaction()
+                        .addToBackStack(AddressMapFragment.TAG);
+                fragmentTransaction.replace(R.id.container_body, fragment,AddressMapFragment.TAG);
+                fragmentTransaction.commit();break;
+
+
+        }
+
     }
 }

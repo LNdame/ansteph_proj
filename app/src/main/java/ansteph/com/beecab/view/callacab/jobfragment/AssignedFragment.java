@@ -4,6 +4,7 @@ package ansteph.com.beecab.view.callacab.jobfragment;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import ansteph.com.beecab.adapter.JobListViewAdapter;
 import ansteph.com.beecab.app.Config;
 import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.model.JourneyRequest;
+import ansteph.com.beecab.view.callacab.CabCaller;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -197,7 +199,11 @@ public class AssignedFragment extends Fragment {
             public void onTick(long millisUntilFinished) {
                 //    txtTimer.setText("Time remaining: " + millisUntilFinished/1000);
                 try {
-                    retrieveAssignedJobs();
+                   // if(((CabCaller)getActivity()).isInFront())
+                        if(CabCaller.isInFront){
+                        retrieveAssignedJobs();
+                           // Log.e("infront", "yes");
+                        }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }catch (Exception e)

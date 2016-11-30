@@ -30,6 +30,7 @@ import ansteph.com.beecab.adapter.JobListViewAdapter;
 import ansteph.com.beecab.app.Config;
 import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.model.JourneyRequest;
+import ansteph.com.beecab.view.callacab.CabCaller;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -200,7 +201,10 @@ public class PendingFragment extends Fragment {
             @Override
             public void onTick(long millisUntilFinished) {
                 try {
-                    retrievePendingJobs();
+
+                   // if(((CabCaller)getActivity()).isInFront())
+                    if(CabCaller.isInFront)
+                        retrievePendingJobs();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }catch (Exception e)

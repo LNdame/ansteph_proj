@@ -27,6 +27,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -322,7 +323,14 @@ public class AddressMapFragment extends Fragment implements
         loc.setLatitude(markerLocation.latitude);
         loc.setLongitude(markerLocation.longitude);
         mLocation= loc;
-        handleAddressSearch(loc);
+        try
+        {
+            handleAddressSearch(loc);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Oops! Cannot find this address!", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -433,7 +441,23 @@ public class AddressMapFragment extends Fragment implements
     public void onCameraChange(CameraPosition cameraPosition) {
        // mCameraTxt.setText(cameraPosition.target.toString());
 
-        mPE.setPosition(cameraPosition.target);
+       // mPE.setPosition(cameraPosition.target);
+        animateMarker(mPE,cameraPosition.target,false);
+    //get the adddress at the middle of the screen from camera target
+        Location loc  = new Location("");
+        loc.setLatitude(cameraPosition.target.latitude);
+        loc.setLongitude(cameraPosition.target.longitude);
+        mLocation= loc;
+
+        try
+        {
+            handleAddressSearch(loc);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Oops! Cannot find this address!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public interface OnFragmentInteractionListener {

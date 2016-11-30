@@ -47,6 +47,8 @@ public class CabCaller extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     Button btnCaller;
+
+    public static boolean isInFront=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,5 +189,27 @@ public class CabCaller extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return tabTitles[position] ;
         }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setInFront(true);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        setInFront(false);
+    }
+
+    public boolean isInFront() {
+        return isInFront;
+    }
+
+    public void setInFront(boolean inFront) {
+        isInFront = inFront;
     }
 }
