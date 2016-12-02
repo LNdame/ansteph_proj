@@ -182,6 +182,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ansteph.com.beecab.view.callacab.JobResponder"/>
         </activity>
+        <activity
+            android:name=".view.extraaction.Disclaimer"
+            android:label="@string/title_activity_disclaimer"
+            android:parentActivityName=".view.callacab.ActionList"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ansteph.com.beecab.view.callacab.ActionList"/>
+        </activity>
     </application>
 
 </manifest>

@@ -119,10 +119,10 @@
     <string name="start">GOT IT</string>
 
     <string name="slide_1_title">Hello from BeeCab!</string>
-    <string name="slide_1_desc">Welcome to the network of cab,\n find your favorite cab companies and reliable freelancers !</string>
+    <string name="slide_1_desc">Welcome to the network of cab,\n find your favorite cab companies and reliable independent drivers !</string>
 
-    <string name="slide_2_title">Movie Tickets</string>
-    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
+    <string name="slide_2_title">BeeCab is easy to use!</string>
+    <string name="slide_2_desc">Hail a cab from here the way you will do it over the phone,\n you can even haggle the fare!</string>
 
     <string name="slide_3_title">Across South Africa</string>
     <string name="slide_3_desc">Select your pickup and destination area,\n  set the pickup time,\n  propose a fare and let the biding war begin!</string>
@@ -237,5 +237,6 @@
     <string name="title_activity_credits">Credits</string>
     <string name="title_activity_contact">Contact</string>
     <string name="title_activity_driver_profile_view">Driver Profile</string>
+    <string name="title_activity_disclaimer">Disclaimer</string>
 
 </resources>
