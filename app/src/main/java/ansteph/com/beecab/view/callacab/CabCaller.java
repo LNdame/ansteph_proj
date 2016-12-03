@@ -1,16 +1,21 @@
 package ansteph.com.beecab.view.callacab;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,16 +30,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import ansteph.com.beecab.R;
+import ansteph.com.beecab.app.Config;
 import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.helper.SessionManager;
 import ansteph.com.beecab.model.Client;
 import ansteph.com.beecab.model.JourneyRequest;
 import ansteph.com.beecab.service.FirebaseServerRegistration;
+import ansteph.com.beecab.util.NotificationUtils;
 import ansteph.com.beecab.view.callacab.jobfragment.AssignedFragment;
 import ansteph.com.beecab.view.callacab.jobfragment.PendingFragment;
 import ansteph.com.beecab.view.profile.EditProfile;
 
 public class CabCaller extends AppCompatActivity {
+
+    private static final String TAG = CabCaller.class.getSimpleName();
 
     SessionManager sessionManager;
 
@@ -47,6 +56,8 @@ public class CabCaller extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     Button btnCaller;
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     public static boolean isInFront=true;
     @Override
@@ -65,7 +76,7 @@ public class CabCaller extends AppCompatActivity {
                 ,user.get(SessionManager.KEY_MOBILE),user.get(SessionManager.KEY_APIKEY)));
 
 
-        //Try to register the firebase messaging token
+        /*/Try to register the firebase messaging token
         FirebaseMessaging.getInstance().subscribeToTopic("BeeCab");
         String token= FirebaseInstanceId.getInstance().getToken();
 
@@ -78,7 +89,32 @@ public class CabCaller extends AppCompatActivity {
 
             fbRegistration.registerFBToken();
             // registerFBToken(token);
-        }
+        }*/
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                //Checking for the type of intent filter
+                if(intent.getAction().equals(Config.REGISTRATION_COMPLETE))
+                {
+                    //gcm successful reg
+                    //now subscribe to the topic beecab topic to receive app wide notifications
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                }else if (intent.getAction().equals(Config.PUSH_NOTIFICATION))
+                {
+                    String message = intent.getStringExtra("message");
+
+                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+                }
+
+            }
+        };
+
+        displayFirebaseRegId();
+        updateRegIDonServer();
+
+
 
         pendingJobs = new ArrayList<>();
 
@@ -98,6 +134,42 @@ public class CabCaller extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+    }
+
+
+    // Fetches reg id from shared preferences
+    // and displays on the screen
+    private void displayFirebaseRegId() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        String regId = pref.getString("regId", null);
+
+        Log.e(TAG, "Firebase reg id: " + regId);
+
+        if (TextUtils.isEmpty(regId))
+            Log.e(TAG, "Firebase reg id: Firebase Reg Id is not received yet! " );
+
+    }
+
+    private void updateRegIDonServer()
+    {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        String regId = pref.getString("regId", null);
+        String regoldId = pref.getString("regoldId", null);
+
+        if(!regId.equals(regoldId))
+        {
+            FirebaseServerRegistration fbRegistration = new FirebaseServerRegistration
+                    (getApplicationContext(), mGlobalRetainer.get_grClient(),regId);
+
+            fbRegistration.registerFBToken();
+
+
+
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("regoldId", regId);
+            editor.commit();
+        }
 
     }
     @Override
@@ -196,11 +268,22 @@ public class CabCaller extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setInFront(true);
+
+        // register GCM registration complete receiver
+        LocalBroadcastManager.getInstance(GlobalRetainer.getAppContext()).registerReceiver(mRegistrationBroadcastReceiver, new IntentFilter(Config.REGISTRATION_COMPLETE));
+
+        // register new push message receiver
+        // by doing this, the activity will be notified each time a new message arrives
+        LocalBroadcastManager.getInstance(GlobalRetainer.getAppContext()).registerReceiver(mRegistrationBroadcastReceiver, new IntentFilter(Config.PUSH_NOTIFICATION));
+
+        // clear the notification area when the app is opened
+        NotificationUtils.clearNotifications(GlobalRetainer.getAppContext());
     }
 
 
     @Override
     protected void onPause() {
+        LocalBroadcastManager.getInstance(GlobalRetainer.getAppContext()).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
         setInFront(false);
     }

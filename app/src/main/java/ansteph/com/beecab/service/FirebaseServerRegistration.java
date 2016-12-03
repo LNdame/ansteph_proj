@@ -1,6 +1,7 @@
 package ansteph.com.beecab.service;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -20,11 +21,14 @@ import java.util.Map;
 import ansteph.com.beecab.app.Config;
 import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.model.Client;
+import ansteph.com.beecab.view.callacab.CabCaller;
 
 /**
  * Created by loicStephan on 10/08/16.
  */
 public class FirebaseServerRegistration {
+
+    private static final String TAG = FirebaseServerRegistration.class.getSimpleName();
 
     private Context context;
 
@@ -46,7 +50,8 @@ public class FirebaseServerRegistration {
 
     public  void registerFBToken()
     {
-
+        // sending gcm token to server
+        Log.e(TAG, "sendRegistrationToServer: " + token);
 
         if(client!= null)
         {
