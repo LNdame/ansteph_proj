@@ -30,10 +30,10 @@ public class ActionList extends AppCompatActivity {
         ArrayList<String> list = new ArrayList<>();
 
         list.add("Profile");
-        list.add("Referral Program");
+        list.add("Invite friends");
         list.add("Credits");
         list.add("Contact Us");
-        list.add("Test Zone");
+        list.add("Disclaimer");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
 

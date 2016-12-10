@@ -298,7 +298,7 @@ GlobalRetainer mGlobalRetainer;
                 params.put("pickupCoord", journeyRequest.getPickupCoord());
                 params.put("destCoord", journeyRequest.getDestinationCoord());
                 params.put("acceptedFare",String.valueOf(jrr.getCounterOffer()) );
-                params.put("city", "PE");
+                params.put("city", (journeyRequest.getCity()!=null?journeyRequest.getCity():"South Africa"));
                 params.put("jrID",String.valueOf(jrr.getJorID()));
                 params.put("tcID", mGlobalRetainer.get_grClient().getId());
                 params.put("tdID", jrr.getTaxiID());

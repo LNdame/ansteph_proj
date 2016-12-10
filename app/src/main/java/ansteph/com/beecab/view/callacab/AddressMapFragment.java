@@ -173,7 +173,9 @@ public class AddressMapFragment extends Fragment implements
                 fragmentTransaction.replace(R.id.container_body, fragment,SetRouteFragment.TAG);
                 fragmentTransaction.commit();
 
+                if(grabFlag==Constants.PICKUP_GRAB)
                 ((SetRoute)getActivity()).setCity(mCity);
+
                 onOkButtonPressed(txtFormatAddress.getText().toString(), mLocation);
             }
         });
