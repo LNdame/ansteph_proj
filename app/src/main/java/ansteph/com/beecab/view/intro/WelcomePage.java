@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ansteph.com.beecab.R;
+import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.helper.SessionManager;
 import ansteph.com.beecab.view.callacab.CabCaller;
 
@@ -40,7 +41,7 @@ public class WelcomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //checking for firsttime launch - before calling the setcontent view
-      sessionManager = new SessionManager(this);
+      sessionManager = new SessionManager(GlobalRetainer.getAppContext());
         if(!sessionManager.isFirstTimeLaunch())
         {
             goToCabCaller();

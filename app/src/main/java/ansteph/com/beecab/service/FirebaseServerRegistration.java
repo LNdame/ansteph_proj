@@ -72,9 +72,9 @@ public class FirebaseServerRegistration {
                                 String serverMsg = jsonResponse.getString("message");
 
                                 if(error){
-                                   // Toast.makeText(context, serverMsg,Toast.LENGTH_LONG).show();
+                                //    Toast.makeText(context, serverMsg,Toast.LENGTH_LONG).show();
                                 }else{
-                                   // Toast.makeText(getContext(), serverMsg,Toast.LENGTH_LONG).show(); //context as oppose to getcontext maybe.
+                                  //  Toast.makeText(getContext(), serverMsg,Toast.LENGTH_LONG).show(); //context as oppose to getcontext maybe.
                                 }
 
                             }catch (JSONException e)

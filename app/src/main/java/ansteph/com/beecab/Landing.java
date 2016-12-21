@@ -27,7 +27,7 @@ public class Landing extends AppCompatActivity {
         mGlobalRetainer=(GlobalRetainer)getApplicationContext();
 
         sessionManager = new SessionManager(getApplicationContext());
-      //  Toast.makeText(getApplicationContext(), "User Login Status: " + sessionManager.isLoggedIn(), Toast.LENGTH_LONG).show();
+    Toast.makeText(getApplicationContext(), "firstlaunch: " + sessionManager.isFirstTimeLaunch(), Toast.LENGTH_LONG).show();
 
         if (sessionManager.isLoggedIn()){
 

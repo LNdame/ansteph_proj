@@ -38,7 +38,7 @@ import ansteph.com.beecab.model.JourneyRequest;
 import ansteph.com.materialshowcase.MaterialShowcaseView;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link Fragment} subclass. this class in completely irrrelevant should even be deleted
  * Use the {@link CabCallerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -171,17 +171,7 @@ public class CabCallerFragment extends Fragment {
 
 
 
-        try {
-            retrievePendingJobs();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        try {
-            retrieveAssignedJobs();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
       //  MaterialShowcaseView.resetSingleUse(getActivity(), SHOWCASE_ID);
         presentShowcaseView(2000);
 
@@ -189,139 +179,7 @@ public class CabCallerFragment extends Fragment {
 
     }
 
-    private void UpdatePendingJobList(JSONArray jobArray)
-    {
-        mGlobalRetainer.get_grPendingJobs().clear();
 
-        for (int i=0; i<jobArray.length(); i++)
-        {
-            try {
-                JSONObject job = jobArray.getJSONObject(i);
-             JourneyRequest j=  new JourneyRequest(job.getInt("id"), job.getString("jr_pickup_add"),job.getString("jr_destination_add"),job.getString("jr_pickup_time"),String.valueOf(job.getInt("jr_proposed_fare"))
-                        ,job.getString("jr_pickup_coord"),job.getString("jr_destination_coord"),job.getString("jr_tc_id"));
-
-                SimpleDateFormat sdf = new SimpleDateFormat(Config.DATE_FORMAT);
-
-                try{
-                    Date mDate = sdf.parse(job.getString("jr_time_created"));
-                    j.setTimeCreated(mDate);
-                }catch (ParseException e)
-                {
-                    e.printStackTrace();
-                }
-
-                mGlobalRetainer.get_grPendingJobs().add(j);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-        adapter.notifyDataSetChanged();
-    }
-
-
-    private void UpdateAssignJobList(JSONArray jobArray)
-    {
-        mGlobalRetainer.get_grAssignedJobs().clear();
-        for (int i=0; i<jobArray.length(); i++)
-        {
-            try {
-                JSONObject job = jobArray.getJSONObject(i);
-                JourneyRequest j=  new JourneyRequest(job.getInt("id"), job.getString("jr_pickup_add"),job.getString("jr_destination_add"),job.getString("jr_pickup_time"),String.valueOf(job.getInt("jr_proposed_fare"))
-                        ,job.getString("jr_pickup_coord"),job.getString("jr_destination_coord"),job.getString("jr_tc_id"));
-
-                SimpleDateFormat sdf = new SimpleDateFormat(Config.DATE_FORMAT);
-
-                try{
-                    Date mDate = sdf.parse(job.getString("jr_time_created"));
-                    j.setTimeCreated(mDate);
-                }catch (ParseException e)
-                {
-                    e.printStackTrace();
-                }
-
-                mGlobalRetainer.addAssignedJob(j);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-        asAdapter.notifyDataSetChanged();
-    }
-
-
-    public void retrievePendingJobs() throws JSONException {
-
-        String url = ""+String.format(Config.RETRIEVE_PENDING_JOB_URL,mGlobalRetainer.get_grClient().getId());
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try{
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean error = jsonResponse.getBoolean(Config.ERROR_RESPONSE);
-                            // String serverMsg = jsonResponse.getString(Config.MSG_RESPONSE);
-                            if(!error){
-
-                                //JSONObject jobsList = jsonResponse.getJSONObject("jobs");
-                                JSONArray jobsjsonArray = jsonResponse.getJSONArray("jobs");
-
-                                UpdatePendingJobList(jobsjsonArray);
-
-                            }
-                        }catch (JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){};
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(stringRequest);
-
-    }
-
-
-    public void retrieveAssignedJobs() throws JSONException {
-
-        String url = ""+String.format(Config.RETRIEVE_ASS_JOB_URL,mGlobalRetainer.get_grClient().getId());
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try{
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean error = jsonResponse.getBoolean(Config.ERROR_RESPONSE);
-                            // String serverMsg = jsonResponse.getString(Config.MSG_RESPONSE);
-                            if(!error){
-
-                                //JSONObject jobsList = jsonResponse.getJSONObject("jobs");
-                                JSONArray jobsjsonArray = jsonResponse.getJSONArray("jobs");
-
-                                UpdateAssignJobList(jobsjsonArray);
-
-                            }
-                        }catch (JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){};
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(stringRequest);
-
-    }
 
     private static final String SHOWCASE_ID = "simple example";
     private void presentShowcaseView(int withDelay)

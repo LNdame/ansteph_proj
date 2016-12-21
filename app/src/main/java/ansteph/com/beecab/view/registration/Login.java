@@ -36,6 +36,7 @@ import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.helper.SessionManager;
 import ansteph.com.beecab.model.Client;
 import ansteph.com.beecab.view.callacab.CabCaller;
+import ansteph.com.beecab.view.intro.Disclaimer;
 import ansteph.com.beecab.view.intro.WelcomePage;
 import ansteph.com.beecab.view.profile.UpdatePassword;
 
@@ -152,7 +153,8 @@ public class Login extends AppCompatActivity {
                                         startActivity(intent);
                                     }
                                    else if(status == 1){
-                                        Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                                      //  Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                                        Intent intent = new Intent(getApplicationContext(), Disclaimer.class);
                                         startActivity(intent);
 
                                         sessionManager.createLoginSession(mGlobalretainer.get_grClient().getId(),mGlobalretainer.get_grClient().getName(),

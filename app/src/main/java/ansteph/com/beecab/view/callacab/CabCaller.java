@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,16 +22,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import ansteph.com.beecab.R;
+import ansteph.com.beecab.adapter.CustomVolleyRequest;
 import ansteph.com.beecab.app.Config;
 import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.helper.SessionManager;
@@ -56,8 +70,12 @@ public class CabCaller extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     Button btnCaller;
-
+    private Handler mAdvertHandler = new Handler();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    LinearLayout lnImage1 ;
+
+    //Imageloader to load images
+    private ImageLoader imageLoader;
 
     public static boolean isInFront=true;
     @Override
@@ -66,6 +84,7 @@ public class CabCaller extends AppCompatActivity {
         setContentView(R.layout.activity_cab_caller);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        lnImage1 = (LinearLayout) findViewById(R.id.lnImage1) ;
 
         sessionManager = new SessionManager(getApplicationContext());
         mGlobalRetainer= (GlobalRetainer) getApplicationContext();
@@ -105,7 +124,7 @@ public class CabCaller extends AppCompatActivity {
                 {
                     String message = intent.getStringExtra("message");
 
-                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),  message, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -135,6 +154,8 @@ public class CabCaller extends AppCompatActivity {
             }
         });
 
+
+        mAdvertHandler.postDelayed(runnableSwitchAdvert, 30000);
     }
 
 
@@ -153,11 +174,17 @@ public class CabCaller extends AppCompatActivity {
 
     private void updateRegIDonServer()
     {
+        Log.e(TAG, "saving to server ");
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
+
         String regoldId = pref.getString("regoldId", null);
 
-        if(!regId.equals(regoldId))
+        Log.e(TAG, "saving to server "+ regId);
+        Log.e(TAG, "saving to server "+ regoldId);
+
+       // if(!regId.equals(regoldId))
+        if(regId!=null)
         {
             FirebaseServerRegistration fbRegistration = new FirebaseServerRegistration
                     (getApplicationContext(), mGlobalRetainer.get_grClient(),regId);
@@ -266,7 +293,7 @@ public class CabCaller extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
+
         setInFront(true);
 
         // register GCM registration complete receiver
@@ -278,14 +305,17 @@ public class CabCaller extends AppCompatActivity {
 
         // clear the notification area when the app is opened
         NotificationUtils.clearNotifications(GlobalRetainer.getAppContext());
+        super.onResume();
     }
 
 
     @Override
     protected void onPause() {
         LocalBroadcastManager.getInstance(GlobalRetainer.getAppContext()).unregisterReceiver(mRegistrationBroadcastReceiver);
-        super.onPause();
         setInFront(false);
+        mAdvertHandler.removeCallbacks(runnableSwitchAdvert);
+        super.onPause();
+
     }
 
     public boolean isInFront() {
@@ -295,4 +325,89 @@ public class CabCaller extends AppCompatActivity {
     public void setInFront(boolean inFront) {
         isInFront = inFront;
     }
+
+
+    //running the advert
+    private Runnable runnableSwitchAdvert = new Runnable() {
+        @Override
+        public void run() {
+
+            //do what need to be done
+
+          // Toast.makeText(GlobalRetainer.getAppContext(),"switch advert", Toast.LENGTH_LONG).show();
+            getAdvertImageData();
+            //recall
+            mAdvertHandler.postDelayed(this, 30000);
+        }
+    };
+
+    private void getAdvertImageData()
+    {
+       // final ProgressDialog loading = ProgressDialog.show(GlobalRetainer.getAppContext(), "Please wait ","Fetching data...",false,false);
+
+        String url = String.format(Config.RETRIEVE_ADVERT_IMAGE_URL);
+
+        //Creating a json array request to get the json from our api
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        //Dismissing the progressdialog on response
+                       // loading.dismiss();
+
+                        //Displaying our grid
+                        loadImage(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        //Creating a request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(GlobalRetainer.getAppContext());
+        //Adding our request to the queue
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private void loadImage(JSONArray jsonArray)
+    {
+
+        //Creating a json object of the current index
+        JSONObject obj = null;
+        String imageurl1 =null;
+
+        try {
+            obj = jsonArray.getJSONObject(0);
+            imageurl1 = obj.getString(Config.TAG_ADV_IMAGE_URL);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        if(imageurl1!=null){
+            //NetworkImageView
+            NetworkImageView networkImageView = new NetworkImageView(GlobalRetainer.getAppContext());
+
+            imageLoader = CustomVolleyRequest.getInstance(GlobalRetainer.getAppContext()).getImageLoader();
+            imageLoader.get(imageurl1, ImageLoader.getImageListener(networkImageView,R.mipmap.ic_launcher,android.R.drawable.ic_dialog_alert));
+
+            //seting the image to load
+            networkImageView.setImageUrl(imageurl1,imageLoader);
+
+            networkImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+            LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,LinearLayoutCompat.LayoutParams.MATCH_PARENT);
+            // networkImageView.setLayoutParams(new GridView.LayoutParams(400,400));
+            lnImage1.removeAllViews();
+            lnImage1.addView(networkImageView, params);
+
+            //save internally
+
+        }
+
+    }
+
 }

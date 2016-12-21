@@ -45,6 +45,8 @@ public class Config {
 
     public static final String URL_RESEND_OTP = DOMAIN+"v1/resendotp/%s";
 
+    public static final String RETRIEVE_ADVERT_IMAGE_URL = DOMAIN+"v1/retrieve_advert_image";
+
     /****************************************************---SMS FLAGS---*************************************************************/
 
     // SMS provider identification
@@ -90,6 +92,7 @@ public class Config {
     public static final String KEY_USERNAME = "username";
     public static final String KEY_OTP = "otp";
     public static final String TAG_IMAGE_URL = "profile_picture_url";
+    public static final String TAG_ADV_IMAGE_URL = "advert_picture_url";
 
     public static final String TAG_DRIVER_IMAGE_URL = "car_picture_url";
     //JSON Tag from response from server

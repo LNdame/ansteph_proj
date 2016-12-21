@@ -116,6 +116,9 @@
 
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
+
+    <string name="cancel">CANCEL</string>
+    <string name="accept">ACCEPT</string>
     <string name="start">GOT IT</string>
 
     <string name="slide_1_title">Hello from BeeCab!</string>
@@ -228,7 +231,7 @@
     <string name="missing_info">Missing some critical information</string>
     <string name="pwd_short">The password provided is too short (min. 6 characters)</string>
     <string name="pwd_mismatch">The password and the confirmed password do not match</string>
-    <string name="title_activity_cab_caller">CabCaller</string>
+    <string name="title_activity_cab_caller">BeeCab</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="title_credits">BeeCab and BeeCab for Drivers</string>

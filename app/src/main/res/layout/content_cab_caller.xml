@@ -11,10 +11,20 @@
     tools:context="ansteph.com.beecab.view.callacab.CabCaller"
     tools:showIn="@layout/activity_cab_caller">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/lnImage1"
+
+        android:layout_width="match_parent"
+        android:layout_height="142dp"
+        android:layout_gravity="center">
+
+    </LinearLayout>
 
     <ViewAnimator
         android:layout_width="wrap_content"
         android:layout_height="142dp"
+        android:visibility="gone"
         android:id="@+id/viewAnimator"
         android:background="@color/colorAccent"
         tools:layout_editor_absoluteY="0dp"

@@ -118,10 +118,12 @@ public class ReferralHistory extends AppCompatActivity {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(getString(R.string.title_activity_referral_history));
+                  //  collapsingToolbar.setTitle(getString(R.string.title_activity_referral_history));
+                    collapsingToolbar.setTitle("");
                     isShow = true;
                 } else if (isShow) {
-                    collapsingToolbar.setTitle(getString(R.string.title_activity_referral_history));
+                 //   collapsingToolbar.setTitle(getString(R.string.title_activity_referral_history));
+                    collapsingToolbar.setTitle("");
                     isShow = false;
                 }
             }

@@ -191,6 +191,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ansteph.com.beecab.view.callacab.ActionList"/>
         </activity>
+        <activity
+            android:name=".view.intro.Disclaimer"
+            android:label="@string/title_activity_disclaimer"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

@@ -3,11 +3,13 @@ package ansteph.com.beecab.view.callacab.jobfragment;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -54,6 +56,7 @@ public class PendingFragment extends Fragment {
     GlobalRetainer mGlobalRetainer;
     JobListViewAdapter peAdapter;
 
+    private Handler mPendingHandler = new Handler();
 
     public PendingFragment() {
         // Required empty public constructor
@@ -109,7 +112,7 @@ public class PendingFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        mPendingHandler.postDelayed(runnableCheckPending, 25000);
 
         return rootView;
 
@@ -118,7 +121,13 @@ public class PendingFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        primeTimer();
+        //primeTimer();
+    }
+
+    @Override
+    public void onPause() {
+        mPendingHandler.removeCallbacks(runnableCheckPending);
+        super.onPause();
     }
 
     private void UpdatePendingJobList(JSONArray jobArray)
@@ -188,6 +197,29 @@ public class PendingFragment extends Fragment {
         requestQueue.add(stringRequest);
 
     }
+
+
+    private Runnable runnableCheckPending = new Runnable() {
+        @Override
+        public void run() {
+            //Toast.makeText(GlobalRetainer.getAppContext(),"check pending", Toast.LENGTH_LONG).show();
+
+            try {
+                // if(((CabCaller)getActivity()).isInFront())
+
+                retrievePendingJobs();
+                // Log.e("infront", "yes");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            mPendingHandler.postDelayed(this, 25000);
+        }
+    };
 
 
     private void primeTimer()

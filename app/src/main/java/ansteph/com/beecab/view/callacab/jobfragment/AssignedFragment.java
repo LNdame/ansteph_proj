@@ -3,12 +3,14 @@ package ansteph.com.beecab.view.callacab.jobfragment;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -54,6 +56,8 @@ public class AssignedFragment extends Fragment {
 
     GlobalRetainer mGlobalRetainer;
     JobListViewAdapter asAdapter;
+
+    private Handler mAssignedHandler = new Handler();
 
 
     public AssignedFragment() {
@@ -109,6 +113,9 @@ public class AssignedFragment extends Fragment {
             e.printStackTrace();
         }
 
+
+        mAssignedHandler.postDelayed(runnableCheckAssigned, 30000);
+
         return rootView;
     }
 
@@ -116,7 +123,14 @@ public class AssignedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        primeTimer();
+        //primeTimer();
+    }
+
+
+    @Override
+    public void onPause() {
+        mAssignedHandler.removeCallbacks(runnableCheckAssigned);
+        super.onPause();
     }
 
     private void UpdateAssignJobList(JSONArray jobArray)
@@ -187,6 +201,28 @@ public class AssignedFragment extends Fragment {
 
     }
 
+
+    private Runnable runnableCheckAssigned = new Runnable() {
+        @Override
+        public void run() {
+       //Toast.makeText(GlobalRetainer.getAppContext(),"check assigned", Toast.LENGTH_LONG).show();
+
+            try {
+                // if(((CabCaller)getActivity()).isInFront())
+
+                    retrieveAssignedJobs();
+                    // Log.e("infront", "yes");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            mAssignedHandler.postDelayed(this, 30000);
+        }
+    };
 
 
     private void primeTimer()

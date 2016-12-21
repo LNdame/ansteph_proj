@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-style="@style/AppTheme.NoActionBar"
+    style="@style/AppTheme.NoActionBar"
     tools:context="ansteph.com.beecab.view.intro.WelcomePage">
 
     <android.support.v4.view.ViewPager
