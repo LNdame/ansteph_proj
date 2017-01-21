@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -8,7 +8,7 @@
               tools:context="ansteph.com.beecab.view.callacab.AddressMapFragment">
 
     <LinearLayout
-
+        android:id="@+id/search_lyt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -27,29 +27,62 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
-    android:orientation="horizontal">
+    android:background="@color/white"
+    >
+
+
+
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:textSize="12sp"
+        android:hint="search place here"
+        android:paddingLeft="16dp"
         android:id="@+id/txtFormatAddress"
         android:layout_gravity="center_horizontal"
-        android:focusable="false"
-        android:layout_weight="1"/>
+        android:background="@drawable/write_text"
+        android:paddingRight="40dp"
+        />
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:src="@mipmap/ic_clear"
+        android:layout_alignParentLeft="true"
+        android:layout_alignStart="@+id/txtFormatAddress"
+        android:elevation="5dp"
+        android:id="@+id/imgClear"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/white"
         android:text="Ok"
         android:id="@+id/btnBack"
-        android:layout_gravity="right"/>
-</LinearLayout>
+        android:layout_gravity="left"
+
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="7dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtFormatAddress"
+        android:layout_marginTop="10dp"
+
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:scrollbars="vertical"
+        ></android.support.v7.widget.RecyclerView>
+</RelativeLayout>
 
 <TextView
     android:visibility="gone"
@@ -57,7 +90,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="cameralocation"/>
-
 
     </LinearLayout>
 
@@ -69,4 +101,4 @@
 
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -14,4 +14,18 @@
     tools:context="ansteph.com.beecab.view.extraaction.Disclaimer"
     tools:showIn="@layout/activity_disclaimer">
 
+    <android.support.v4.widget.NestedScrollView
+        android:paddingBottom="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/disclaimer"/>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
 </RelativeLayout>

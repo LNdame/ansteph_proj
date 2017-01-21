@@ -26,15 +26,17 @@ import org.json.JSONObject;
 import ansteph.com.beecab.R;
 import ansteph.com.beecab.app.Config;
 import ansteph.com.beecab.app.GlobalRetainer;
+import ansteph.com.beecab.helper.SessionManager;
 import ansteph.com.beecab.view.callacab.CabCaller;
 
 public class UpdatePassword extends AppCompatActivity {
 
-    GlobalRetainer mGlobalRetainer;
+    GlobalRetainer mGlobalretainer;
 
     EditText txtOldPwd, txtNewPwd, txtConfirmPwd;
     TextView alert;
     ImageView imgValid;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,8 @@ public class UpdatePassword extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mGlobalRetainer =(GlobalRetainer) getApplicationContext();
+        mGlobalretainer =(GlobalRetainer) getApplicationContext();
+        sessionManager = new SessionManager(getApplicationContext());
 
         txtOldPwd = (EditText) findViewById(R.id.input_previous_password) ;
         txtNewPwd = (EditText) findViewById(R.id.input_new_password) ;
@@ -126,7 +129,10 @@ public class UpdatePassword extends AppCompatActivity {
         alert.setText("");
         alert.setVisibility(View.INVISIBLE);
         try {
-            CheckOldPwd(mGlobalRetainer.get_grClient().getMobile(), txtOldPwd.getText().toString().trim());
+            CheckOldPwd(mGlobalretainer.get_grClient().getMobile(), txtOldPwd.getText().toString().trim());
+            sessionManager.createLoginSession(mGlobalretainer.get_grClient().getId(),mGlobalretainer.get_grClient().getName(),
+                    mGlobalretainer.get_grClient().getEmail(),mGlobalretainer.get_grClient().getMobile(),mGlobalretainer.get_grClient().getApikey());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -212,7 +218,7 @@ public class UpdatePassword extends AppCompatActivity {
         final ProgressDialog loading = ProgressDialog.show(this, "Updating","Now updating our records", false, false);
 
 
-        String url = ""+String.format(Config.UPDATE_PWD_URL,pwd,mGlobalRetainer.get_grClient().getId());
+        String url = ""+String.format(Config.UPDATE_PWD_URL,pwd, mGlobalretainer.get_grClient().getId());
 
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, url,
                 new Response.Listener<String>() {

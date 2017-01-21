@@ -33,7 +33,23 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         //edtTime
         EditText edtTime = (EditText) getActivity().findViewById(R.id.edtTime);
 
-        edtTime.setText(  String.valueOf(hourOfDay)+ " : "+ String.valueOf(minute));
+        String min ="";
+        if (minute<10)
+        {
+            min = "0"+String.valueOf(minute);
+        }else{
+            min =String.valueOf(minute);
+        }
+
+        String hour = "";
+        if(hourOfDay<10)
+        {
+            hour="0"+String.valueOf(hourOfDay);
+        }else{
+            hour=String.valueOf(hourOfDay);
+        }
+
+        edtTime.setText( hour+ " : "+ min);
 
     }
 }

@@ -23,16 +23,13 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
 
-
-
-
-
     compile project(':materialshowcaselibrary')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.google.firebase:firebase-messaging:9.4.0'
     compile 'com.google.android.gms:play-services-maps:9.4.0'
     compile 'com.google.android.gms:play-services-location:9.4.0'
+    compile 'com.google.android.gms:play-services-places:9.4.0'
     compile 'com.google.android.gms:play-services-auth:9.4.0'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'

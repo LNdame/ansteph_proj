@@ -26,8 +26,11 @@ public class Config {
     public static final String ASSIGN_JOB_URL =DOMAIN+"v1/createacceptedrequest";
 
     public static final String RETRIEVE_PENDING_JOB_URL =DOMAIN+"v1/retrievependingjob/%s";
+    public static final String RETRIEVE_PENDING_JOB_ID_URL =DOMAIN+"v1/retrieveJobPerID/%s";
     public static final String UPDATE_PWD_URL =DOMAIN+"v1/changepassword/%s/%s";
     public static final String RETRIEVE_ASS_JOB_URL =DOMAIN+"v1/retrieveassignjob/%s";
+
+    public static final String LOST_PWD_URL =DOMAIN+"v1/lostpassword/%s";
 
     public static final String CANCEL_JOB = DOMAIN+"v1//updatejob/%s/%s";
     public static final String RETRIEVE_USER_PROFILE_URL = DOMAIN+"v1/retrieve_cl_profile/%s";

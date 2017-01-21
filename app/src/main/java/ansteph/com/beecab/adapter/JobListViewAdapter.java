@@ -16,7 +16,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ansteph.com.beecab.R;
+import ansteph.com.beecab.app.DetailSender;
 import ansteph.com.beecab.model.JourneyRequest;
+import ansteph.com.beecab.service.Constants;
 import ansteph.com.beecab.view.callacab.JobDetail;
 import ansteph.com.beecab.view.callacab.JobResponder;
 
@@ -79,10 +81,15 @@ public class JobListViewAdapter extends ArrayAdapter<JourneyRequest> {
         holder.txtFare.setText(jr.getProposedFare());
         holder.txtTime.setText(jr.getPickupTime());
 
-        if(jr.getStatus()==2)
+        if(jr.getStatus()== Constants.JOB_STATUS_CONFIRMED_BY_DRIVER)
         {
             holder.btnDetails.setBackgroundColor(context.getResources().getColor( R.color.green));
             holder.btnDetails.setText("En route");
+        }
+        else if(jr.getStatus()== Constants.JOB_STATUS_ASSIGNED)
+        {
+            holder.btnDetails.setBackgroundColor(context.getResources().getColor( R.color.colorAccent));
+            holder.btnDetails.setText("Details");
         }
 
         holder.btnDetails.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +97,7 @@ public class JobListViewAdapter extends ArrayAdapter<JourneyRequest> {
             public void onClick(View v) {
 
                 Intent i = new Intent(context, JobDetail.class);
+                JobDetail.detailSender= DetailSender.FROM_MAIN;
                 i.putExtra("job",jr);
                 context.startActivity(i);
                // Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show();
@@ -100,7 +108,7 @@ public class JobListViewAdapter extends ArrayAdapter<JourneyRequest> {
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(jr.getStatus()==0) //only allowed to see the responses if the status is pending
+                if(jr.getStatus()==Constants.JOB_STATUS_PENDING) //only allowed to see the responses if the status is pending
                 {
 
                 Intent i = new Intent(context, JobResponder.class);

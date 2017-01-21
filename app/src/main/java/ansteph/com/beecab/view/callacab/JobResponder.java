@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -58,6 +59,9 @@ public class JobResponder extends AppCompatActivity {
 GlobalRetainer mGlobalRetainer;
     private Context mContext;
     private MaterialListView mListView;
+
+    public TextView destination, pickup, proposedFare,  putime, txtdistance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +75,12 @@ GlobalRetainer mGlobalRetainer;
 
         journeyRequest = null;
 
+        destination  =(TextView) findViewById(R.id.txtDestination);
+        pickup  =(TextView) findViewById(R.id.txtPickup);
+        proposedFare  =(TextView) findViewById(R.id.txtFare);
+        putime  =(TextView) findViewById(R.id.txtTime);
+        txtdistance=(TextView) findViewById(R.id.txtDistance);
+
 
         // Save a reference to the context
         mContext = this;
@@ -80,10 +90,20 @@ GlobalRetainer mGlobalRetainer;
         {
             journeyRequest =(JourneyRequest) b.getSerializable("job");
 
+            destination.setText(journeyRequest.getDestinationAddr());
+            pickup.setText(journeyRequest.getPickupAddr());
+            proposedFare.setText("R" + journeyRequest.getProposedFare());
+            putime.setText(journeyRequest.getPickupTime());
+
             mGlobalRetainer.set_currentInspectedJR(journeyRequest);
 
         }else{
             journeyRequest= mGlobalRetainer.get_currentInspectedJR();
+
+            destination.setText(journeyRequest.getDestinationAddr());
+            pickup.setText(journeyRequest.getPickupAddr());
+            proposedFare.setText("R" + journeyRequest.getProposedFare());
+            putime.setText(journeyRequest.getPickupTime());
         }
 
 

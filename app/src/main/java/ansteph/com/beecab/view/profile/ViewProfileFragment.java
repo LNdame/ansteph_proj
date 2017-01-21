@@ -356,7 +356,7 @@ public class ViewProfileFragment extends Fragment {
                 Bitmap downloadedpic = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 //Save the downloaded image in the device app data and save the path in the pref manag
                 sessionManager.setProfilePath(saveToInternalStorage(downloadedpic));
-                Toast.makeText(getActivity(), "Image saved",Toast.LENGTH_LONG).show();
+               // Toast.makeText(getActivity(), "Image saved",Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }catch (Exception e)

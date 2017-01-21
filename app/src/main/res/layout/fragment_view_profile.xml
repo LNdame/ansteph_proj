@@ -32,8 +32,9 @@
             android:layout_height="229dp"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
+
             android:id="@+id/profilepic"
-            android:src="@drawable/mrhappy"
+            android:src="@drawable/vusip1"
             />
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

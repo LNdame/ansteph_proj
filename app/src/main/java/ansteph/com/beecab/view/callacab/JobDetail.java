@@ -1,5 +1,6 @@
 package ansteph.com.beecab.view.callacab;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,8 +12,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +44,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +53,10 @@ import java.util.concurrent.TimeUnit;
 
 import ansteph.com.beecab.R;
 import ansteph.com.beecab.app.Config;
+import ansteph.com.beecab.app.DetailSender;
+import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.model.JourneyRequest;
+import ansteph.com.beecab.service.Constants;
 
 public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -63,12 +71,15 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
 
     Button btnCancelJob, btnJobback;
 
+   public static DetailSender detailSender;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         job = new JourneyRequest();
 
@@ -81,16 +92,33 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
         txtTimeleft=(TextView) findViewById(R.id.txttimeleft);
 
         Bundle extra = getIntent().getExtras();
-        if(extra!=null)
-        {
-            job = (JourneyRequest) extra.getSerializable("job");
-            destination.setText(job.getDestinationAddr());
-            pickup.setText(job.getPickupAddr());
-            proposedFare.setText("R"+job.getProposedFare());
-            putime.setText(job.getPickupTime());
+        // this is the job is coming from the main board
+
+        if(detailSender==DetailSender.FROM_MAIN) {
+            if (extra != null) {
+                job = (JourneyRequest) extra.getSerializable("job");
+                destination.setText(job.getDestinationAddr());
+                pickup.setText(job.getPickupAddr());
+                proposedFare.setText("R" + job.getProposedFare());
+                putime.setText(job.getPickupTime());
 
 
-            if(job.getTimeCreated()!=null) primeTimer(job.getTimeCreated());
+                if (job.getTimeCreated() != null) primeTimer(job.getTimeCreated());
+            }
+        }
+        // this handle if the jobdetails is triggered by a notification
+        if(detailSender==DetailSender.FROM_NOTIFICATION) {
+            if (extra != null) {
+                String Id = extra.getString("jobID");
+
+
+                try {
+                    retrieveJobPerID(Id);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
 
 
@@ -122,8 +150,9 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
         btnJobback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              if(job.getStatus() == 2)  {
-                  showCloseWarming();
+              if(job.getStatus() == Constants.JOB_STATUS_CONFIRMED_BY_DRIVER)  {
+                 showCloseWarming();
+
               }else{
              onBackPressed();}
 
@@ -139,7 +168,7 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
 
     public void changeBackButton()
     {
-        if(job.getStatus() == 2)
+        if(job.getStatus() == Constants.JOB_STATUS_CONFIRMED_BY_DRIVER)
         {
             btnJobback.setText("Close Job");
         }
@@ -185,11 +214,12 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //if the dude say yes
-                        try {
+                        showRatingDialog();
+                      /*  try {
                             closeJob();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        }
+                        }*/
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -203,6 +233,46 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
         dialog.show();
     }
 
+
+    private void showRatingDialog()
+    {
+        //custom dialog
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        //Get the layout inflater
+        LayoutInflater inflater = getLayoutInflater();
+        //inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.ratinglayout, null))
+                .setTitle("Please rate your driver")
+                .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Dialog d = (Dialog) dialog;
+                        RatingBar ratingBar = (RatingBar) d.findViewById(R.id.driverrating);
+                         float value = ratingBar.getRating();
+
+                        try {
+                            closeJob();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Toast.makeText(getApplicationContext(),String.valueOf(value)+" stars",Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
 
     private void primeTimer(Date sentDate)
     {
@@ -557,6 +627,81 @@ public class JobDetail extends AppCompatActivity implements OnMapReadyCallback {
         }){};
         RequestQueue requestQueue =  Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
+
+    }
+
+
+    public void retrieveJobPerID(String id) throws JSONException {
+
+        String url = ""+String.format(Config.RETRIEVE_PENDING_JOB_ID_URL,id);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try{
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean error = jsonResponse.getBoolean(Config.ERROR_RESPONSE);
+                            // String serverMsg = jsonResponse.getString(Config.MSG_RESPONSE);
+                            if(!error){
+
+                                //JSONObject jobsList = jsonResponse.getJSONObject("jobs");
+                                JSONArray jobsjsonArray = jsonResponse.getJSONArray("jobs");
+
+                                retrieveJob(jobsjsonArray);
+
+                            }
+                        }catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){};
+        //  RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(GlobalRetainer.getAppContext());
+        requestQueue.add(stringRequest);
+
+    }
+
+    public void retrieveJob(JSONArray jobArr)
+    {
+        job = new JourneyRequest();
+        try {
+            JSONObject jobArray = jobArr.getJSONObject(0);
+            JourneyRequest j=  new JourneyRequest(jobArray.getInt("id"), jobArray.getString("jr_pickup_add"),jobArray.getString("jr_destination_add"),jobArray.getString("jr_pickup_time"),String.valueOf(jobArray.getInt("jr_proposed_fare"))
+                    ,jobArray.getString("jr_pickup_coord"),jobArray.getString("jr_destination_coord"),jobArray.getString("jr_tc_id"));
+
+            SimpleDateFormat sdf = new SimpleDateFormat(Config.DATE_FORMAT);
+
+            j.setStatus(jobArray.getInt("jr_status"));
+            try{
+                Date mDate = sdf.parse(jobArray.getString("jr_time_created"));
+                j.setTimeCreated(mDate);
+            }catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+
+            job=j;
+
+            destination.setText(job.getDestinationAddr());
+            pickup.setText(job.getPickupAddr());
+            proposedFare.setText("R"+job.getProposedFare());
+            putime.setText(job.getPickupTime());
+
+
+            if(job.getTimeCreated()!=null) primeTimer(job.getTimeCreated());
+
+            changeBackButton();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

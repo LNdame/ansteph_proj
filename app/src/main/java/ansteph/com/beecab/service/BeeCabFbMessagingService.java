@@ -18,8 +18,10 @@ import org.json.JSONObject;
 import ansteph.com.beecab.Landing;
 import ansteph.com.beecab.R;
 import ansteph.com.beecab.app.Config;
+import ansteph.com.beecab.app.DetailSender;
 import ansteph.com.beecab.util.NotificationUtils;
 import ansteph.com.beecab.view.callacab.CabCaller;
+import ansteph.com.beecab.view.callacab.JobDetail;
 
 /**
  * Created by loicStephan on 04/08/16.
@@ -94,11 +96,18 @@ public class BeeCabFbMessagingService extends FirebaseMessagingService {
             Log.e(TAG, "imageUrl: " + imageUrl);
             Log.e(TAG, "timestamp: " + timestamp);
 
+            String jobID="",tag="";
+
+            jobID = payload.getString("jobID");
+            tag = payload.getString("tag");
+
 
             if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
                 // app is in foreground, broadcast the push message
                 Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
                 pushNotification.putExtra("message", message);
+                pushNotification.putExtra("jobID", jobID);
+                pushNotification.putExtra("tag", "BeeCab_closure");
                 LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
                 // play notification sound
@@ -106,6 +115,25 @@ public class BeeCabFbMessagingService extends FirebaseMessagingService {
                 notificationUtils.playNotificationSound();
             } else {
                 // app is in background, show the notification in notification tray
+               if(!TextUtils.isEmpty(tag)&& tag.equals("BeeCab_closure")){
+
+                   Intent resultIntent = new Intent(getApplicationContext(), JobDetail.class);
+                   JobDetail.detailSender = DetailSender.FROM_NOTIFICATION;
+                   resultIntent.putExtra("jobID", jobID);
+
+                   // check for image attachment
+                   if (TextUtils.isEmpty(imageUrl)) {
+                       showNotificationMessage(getApplicationContext(), title, message, timestamp, resultIntent);
+                   } else {
+                       // image is present, show notification with image
+                       showNotificationMessageWithBigImage(getApplicationContext(), title, message, timestamp, resultIntent, imageUrl);
+                   }
+
+
+               }else
+
+               {
+
                 Intent resultIntent = new Intent(getApplicationContext(), CabCaller.class);
                 resultIntent.putExtra("message", message);
 
@@ -116,6 +144,8 @@ public class BeeCabFbMessagingService extends FirebaseMessagingService {
                     // image is present, show notification with image
                     showNotificationMessageWithBigImage(getApplicationContext(), title, message, timestamp, resultIntent, imageUrl);
                 }
+
+               }
             }
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());

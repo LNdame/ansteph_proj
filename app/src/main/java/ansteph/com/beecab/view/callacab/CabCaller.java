@@ -2,6 +2,7 @@ package ansteph.com.beecab.view.callacab;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
@@ -45,6 +47,7 @@ import java.util.HashMap;
 import ansteph.com.beecab.R;
 import ansteph.com.beecab.adapter.CustomVolleyRequest;
 import ansteph.com.beecab.app.Config;
+import ansteph.com.beecab.app.DetailSender;
 import ansteph.com.beecab.app.GlobalRetainer;
 import ansteph.com.beecab.helper.SessionManager;
 import ansteph.com.beecab.model.Client;
@@ -123,8 +126,16 @@ public class CabCaller extends AppCompatActivity {
                 }else if (intent.getAction().equals(Config.PUSH_NOTIFICATION))
                 {
                     String message = intent.getStringExtra("message");
+                    String tag   = intent.getStringExtra("tag");
+                    String id= intent.getStringExtra("jobID");
 
-                    Toast.makeText(getApplicationContext(),  message, Toast.LENGTH_LONG).show();
+                    if(tag.equals("BeeCab_closure")){
+                    showNotificationWarming(message, id);
+                    }else{
+                        Toast.makeText(getApplicationContext(),  message, Toast.LENGTH_LONG).show();
+                    }
+
+
                 }
 
             }
@@ -199,6 +210,45 @@ public class CabCaller extends AppCompatActivity {
         }
 
     }
+
+
+    private void showNotificationWarming(String message, final String id)
+    {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setTitle("Hellooo!")
+                .setPositiveButton("Review", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //if the dude say yes
+
+                        Intent i = new Intent(getApplicationContext(), JobDetail.class);
+                        JobDetail.detailSender = DetailSender.FROM_NOTIFICATION;
+                        i.putExtra("jobID", id);
+
+                       startActivity(i);
+                      /*  try {
+                            closeJob();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }*/
+                    }
+                })
+                .setNegativeButton("Ignore", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //if the dude says no
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
+
+
     @Override
     public void onBackPressed() {
         //Do nothing...

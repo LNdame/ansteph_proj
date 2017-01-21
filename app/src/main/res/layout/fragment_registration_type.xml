@@ -17,20 +17,21 @@
 
         <ImageButton
             android:id="@+id/btnTypeClient"
-            android:layout_width="160dp"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="250dp"
             android:background="@null"
             android:padding="25dp"
             android:layout_margin="25dp"
             android:scaleType="fitXY"
+            android:layout_gravity="center"
             android:src="@drawable/mansil"
 
             />
 
         <ImageButton
             android:id="@+id/btnTypeDriver"
-            android:layout_width="160dp"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="250dp"
             android:background="@null"
             android:padding="25dp"
             android:layout_margin="25dp"

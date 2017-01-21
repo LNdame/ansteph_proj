@@ -88,12 +88,29 @@ public class SetRouteFragment extends Fragment implements View.OnClickListener {
         Calendar c = Calendar.getInstance();
         c.setTime(c.getTime());
 
-        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int hourOfDay = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
+
+        String min ="";
+        if (minute<10)
+        {
+            min = "0"+String.valueOf(minute);
+        }else{
+            min =String.valueOf(minute);
+        }
+
+        String hour = "";
+        if(hourOfDay<10)
+        {
+            hour="0"+String.valueOf(hourOfDay);
+        }else{
+            hour=String.valueOf(hourOfDay);
+        }
+
 
         edtTime = (EditText) rootView.findViewById(R.id.edtTime);
 
-        edtTime.setText(String.valueOf(hour) + " : "+String.valueOf(minute));
+        edtTime.setText(hour + " : "+min);
 
         //picker = (TimePicker) rootView.findViewById(R.id.timePicker);
         //picker.setIs24HourView(Boolean.TRUE);
@@ -103,7 +120,7 @@ public class SetRouteFragment extends Fragment implements View.OnClickListener {
 
         edtDestination.setOnClickListener(this);
         edtPickUp.setOnClickListener(this);
-
+        edtTime.setOnClickListener(this);
 
         ImageButton btnDestShowMap = (ImageButton) rootView.findViewById(R.id.imgbtnDest);
         btnDestShowMap.setOnClickListener(this);
@@ -312,7 +329,8 @@ public class SetRouteFragment extends Fragment implements View.OnClickListener {
                 fragmentTransaction.replace(R.id.container_body, fragment,AddressMapFragment.TAG);
                 fragmentTransaction.commit();break;
 
-
+            case R.id.edtTime:  DialogFragment nf = new TimePickerFragment();
+                nf.show(getActivity().getSupportFragmentManager(),"TimePicker");
         }
 
     }

@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
@@ -56,6 +57,7 @@ public class DriverProfileView extends AppCompatActivity implements View.OnClick
 
     String taxiID;
 
+    RatingBar ratingBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +96,8 @@ public class DriverProfileView extends AppCompatActivity implements View.OnClick
              getProfileData();
         }
 
-
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar) ;
+        ratingBar.setRating(3);
 
         viewAnimator =(ViewAnimator) findViewById(R.id.viewAnimator);
 
@@ -130,12 +133,12 @@ public class DriverProfileView extends AppCompatActivity implements View.OnClick
 
         txtYear = (TextView) findViewById(R.id.txtyear);
 
-       // txtName.setText(mGlobalRetainer.get_grDriver().getName());
-        //txtPhone.setText(mGlobalRetainer.get_grDriver().getMobile());
-        //txtEmail.setText(mGlobalRetainer.get_grDriver().getEmail());
+       // txtName.setText(mGlobalretainer.get_grDriver().getName());
+        //txtPhone.setText(mGlobalretainer.get_grDriver().getMobile());
+        //txtEmail.setText(mGlobalretainer.get_grDriver().getEmail());
 
-       // txtCabLicence.setText(mGlobalRetainer.get_grDriver().getLicence());
-       // txtYear.setText(mGlobalRetainer.get_grDriver().getYear());
+       // txtCabLicence.setText(mGlobalretainer.get_grDriver().getLicence());
+       // txtYear.setText(mGlobalretainer.get_grDriver().getYear());
 
 
 
