@@ -142,12 +142,12 @@ GlobalRetainer mGlobalRetainer;
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull Card card, int position) {
-                Log.d("CARD_TYPE", "" + card.getTag());
+              //  Log.d("CARD_TYPE", "" + card.getTag());
             }
 
             @Override
             public void onItemLongClick(@NonNull Card card, int position) {
-                Log.d("LONG_CLICK", "" + card.getTag());
+               // Log.d("LONG_CLICK", "" + card.getTag());
             }
         });
     }

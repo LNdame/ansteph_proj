@@ -11,6 +11,11 @@
         android:orderInCategory="100"
         android:title="@string/action_loggedUser"
         app:showAsAction="always|withText"/>
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_logout"
@@ -24,10 +29,6 @@
         android:title="@string/action_profile"
         app:showAsAction="never"
         android:visible="false"/>
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
+
 
 </menu>

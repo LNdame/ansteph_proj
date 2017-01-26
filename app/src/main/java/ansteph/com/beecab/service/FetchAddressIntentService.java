@@ -40,7 +40,7 @@ public class FetchAddressIntentService extends IntentService {
         //check if receiver was properly register
         if(mReceiver == null)
         {
-            Log.wtf(TAG, "No receiver received. There is nowhere to send the results");
+           // Log.wtf(TAG, "No receiver received. There is nowhere to send the results");
             return;
         }
 
@@ -49,7 +49,7 @@ public class FetchAddressIntentService extends IntentService {
         if(location == null)
         {
             errorMessage = getString(R.string.no_location_data_provided);
-            Log.wtf(TAG, errorMessage);
+           // Log.wtf(TAG, errorMessage);
             deliverResultToReceiver(Constants.FAILURE_RESULT,errorMessage);
             return;
         }

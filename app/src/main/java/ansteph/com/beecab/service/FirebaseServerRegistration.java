@@ -51,7 +51,7 @@ public class FirebaseServerRegistration {
     public  void registerFBToken()
     {
         // sending gcm token to server
-        Log.e(TAG, "sendRegistrationToServer: " + token);
+       // Log.e(TAG, "sendRegistrationToServer: " + token);
 
         if(client!= null)
         {

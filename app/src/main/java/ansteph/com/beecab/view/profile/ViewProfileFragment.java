@@ -260,7 +260,7 @@ public class ViewProfileFragment extends Fragment {
                 path = saveToInternalStorage(bitmap);
                 sessionManager.setProfilePath(path);
 
-                Log.e("path", path);
+               // Log.e("path", path);
                 mFilePath = path;
 
             }catch (IOException ie)

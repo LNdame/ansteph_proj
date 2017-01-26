@@ -214,13 +214,13 @@ public class SetRoute extends AppCompatActivity implements ActivityCompat.OnRequ
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.i(TAG, "Connection suspended");
+      //  Log.i(TAG, "Connection suspended");
         mGoogleApiClient.connect();
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
+       // Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
 
     }
 

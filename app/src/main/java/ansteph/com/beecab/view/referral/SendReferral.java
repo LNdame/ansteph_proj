@@ -187,7 +187,7 @@ public class SendReferral extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         loading.dismiss();
-                        Log.e("ref error",error.getMessage());
+                       // Log.e("ref error",error.getMessage());
                         Toast.makeText(getApplication(), "Something wrong happen",Toast.LENGTH_LONG).show();
 
                     }

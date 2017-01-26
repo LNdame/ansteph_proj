@@ -176,23 +176,23 @@ public class CabCaller extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
 
-        Log.e(TAG, "Firebase reg id: " + regId);
+      //  Log.e(TAG, "Firebase reg id: " + regId);
 
-        if (TextUtils.isEmpty(regId))
-            Log.e(TAG, "Firebase reg id: Firebase Reg Id is not received yet! " );
+      /*  if (TextUtils.isEmpty(regId))
+            Log.e(TAG, "Firebase reg id: Firebase Reg Id is not received yet! " );*/
 
     }
 
     private void updateRegIDonServer()
     {
-        Log.e(TAG, "saving to server ");
+       // Log.e(TAG, "saving to server ");
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
 
         String regoldId = pref.getString("regoldId", null);
 
-        Log.e(TAG, "saving to server "+ regId);
-        Log.e(TAG, "saving to server "+ regoldId);
+       // Log.e(TAG, "saving to server "+ regId);
+       // Log.e(TAG, "saving to server "+ regoldId);
 
        // if(!regId.equals(regoldId))
         if(regId!=null)

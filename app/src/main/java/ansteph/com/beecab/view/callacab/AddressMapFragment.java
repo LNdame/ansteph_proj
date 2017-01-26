@@ -252,7 +252,7 @@ public class AddressMapFragment extends Fragment implements
             public void onItemClick(View view, int position) {
                 final PlacesAutocompleteAdapter.PlaceAutocomplete item = mAutocompleteAdapter.getItem(position);
                 final String placeId = String.valueOf(item.placeId);
-                Log.i("TAG", "Autocomplete item selected: " + item.description);
+                //Log.i("TAG", "Autocomplete item selected: " + item.description);
                         /*
                              Issue a request to the Places Geo Data API to retrieve a Place object with additional details about the place.
                          */
@@ -274,8 +274,8 @@ public class AddressMapFragment extends Fragment implements
                         }
                     }
                 });
-                Log.i("TAG", "Clicked: " + item.description);
-                Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
+                //Log.i("TAG", "Clicked: " + item.description);
+               // Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
                 mRecyclerView.setVisibility(View.GONE);
                 // mAutocompleteAdapter.clearData();
             }
@@ -338,7 +338,7 @@ public class AddressMapFragment extends Fragment implements
         mMapView.onPause();
 
         if(mGoogleApiClient.isConnected()){
-            Log.v("Google API","Dis-Connecting");
+           // Log.v("Google API","Dis-Connecting");
             mGoogleApiClient.disconnect();
         }
     }
@@ -370,7 +370,7 @@ public class AddressMapFragment extends Fragment implements
         mMapView.onResume();
 
         if (!mGoogleApiClient.isConnected() && !mGoogleApiClient.isConnecting()){
-            Log.v("Google API","Connecting");
+           // Log.v("Google API","Connecting");
             mGoogleApiClient.connect();
         }
     }
@@ -514,9 +514,7 @@ public class AddressMapFragment extends Fragment implements
         }catch (IllegalArgumentException illegalArgumentException)
         {
             errormsg = getString(R.string.invalid_lat_long_used);
-           Log.e(TAG, errormsg + ". " +
-                    "Latitude = " + location.getLatitude() +
-                    ", Longitude = " + location.getLongitude(), illegalArgumentException) ;
+          // Log.e(TAG, errormsg + ". " + "Latitude = " + location.getLatitude() + ", Longitude = " + location.getLongitude(), illegalArgumentException) ;
         }
 
 

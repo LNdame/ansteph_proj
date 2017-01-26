@@ -37,7 +37,7 @@ public class BeeCabFbInstanceIdService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         super.onTokenRefresh();
         String token= FirebaseInstanceId.getInstance().getToken();
-        Log.d("token", token);
+       // Log.d("token", token);
         // Saving reg id to shared preferences
         storeRegIdInPref(token);
 
@@ -56,7 +56,7 @@ public class BeeCabFbInstanceIdService extends FirebaseInstanceIdService {
 
     private void sendRegistrationToServer(final String token) {
         // sending gcm token to server
-        Log.e(TAG, "sendRegistrationToServer: " + token);
+      //  Log.e(TAG, "sendRegistrationToServer: " + token);
     }
 
     private void registerFBToken(final String token)

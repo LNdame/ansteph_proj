@@ -1,28 +1,34 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'beecabkey'
+            keyPassword 'Ger19Many'
+            storeFile file('/Users/loicStephan/Documents/Ansteph Studio/keystore/beecabkey.jks')
+            storePassword 'Ger19Many'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-
     defaultConfig {
         applicationId "ansteph.com.beecab"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
     }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
-
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':materialshowcaselibrary')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'

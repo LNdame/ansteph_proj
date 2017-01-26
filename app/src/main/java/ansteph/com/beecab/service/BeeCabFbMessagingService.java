@@ -34,7 +34,7 @@ public class BeeCabFbMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.e(TAG, "From: " + remoteMessage.getFrom());
+      //  Log.e(TAG, "From: " + remoteMessage.getFrom());
 
         if (remoteMessage == null)return;
 
@@ -42,19 +42,19 @@ public class BeeCabFbMessagingService extends FirebaseMessagingService {
 //check if a message contains a notification payload
 
         if (remoteMessage.getNotification() != null) {
-            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
+       //     Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
             handleNotification(remoteMessage.getNotification().getBody());
         }
 
 // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
+        //    Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
 
             try {
                 JSONObject json = new JSONObject(remoteMessage.getData().toString());
                 handleDataMessage(json);
             } catch (Exception e) {
-                Log.e(TAG, "Exception: " + e.getMessage());
+             //   Log.e(TAG, "Exception: " + e.getMessage());
             }
         }
         //showNotification(remoteMessage.getData().get("message"));
@@ -89,12 +89,12 @@ public class BeeCabFbMessagingService extends FirebaseMessagingService {
             String timestamp = data.getString("timestamp");
             JSONObject payload = data.getJSONObject("payload");
 
-            Log.e(TAG, "title: " + title);
+           /* Log.e(TAG, "title: " + title);
             Log.e(TAG, "message: " + message);
             Log.e(TAG, "isBackground: " + isBackground);
             Log.e(TAG, "payload: " + payload.toString());
             Log.e(TAG, "imageUrl: " + imageUrl);
-            Log.e(TAG, "timestamp: " + timestamp);
+            Log.e(TAG, "timestamp: " + timestamp);*/
 
             String jobID="",tag="";
 
@@ -148,9 +148,9 @@ public class BeeCabFbMessagingService extends FirebaseMessagingService {
                }
             }
         } catch (JSONException e) {
-            Log.e(TAG, "Json Exception: " + e.getMessage());
+          //  Log.e(TAG, "Json Exception: " + e.getMessage());
         } catch (Exception e) {
-            Log.e(TAG, "Exception: " + e.getMessage());
+            //Log.e(TAG, "Exception: " + e.getMessage());
         }
     }
 
